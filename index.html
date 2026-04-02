@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jackson Systems Limited | Professional Managed IT Services</title>
     
-    <link rel="icon" type="image/png" href="jsl_icon_16x16 (1).png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -31,7 +30,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 10%;
+            padding: 20px 10%;
             background: rgba(0,0,0,0.95);
             border-bottom: 2px solid var(--jsl-orange);
             position: sticky;
@@ -39,12 +38,18 @@
             z-index: 1000;
         }
 
-        .header-logo { max-height: 50px; width: auto; }
+        /* Temporary Text Logo until images are ready */
+        .logo-placeholder { 
+            font-weight: 800; 
+            font-size: 1.5rem; 
+            color: #fff; 
+            text-decoration: none;
+        }
+        .logo-placeholder span { color: var(--jsl-orange); }
 
         nav a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 0.9rem; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: 0.3s; }
         nav a:hover { color: var(--jsl-orange); }
 
-        /* Hero Section */
         .hero {
             position: relative;
             height: 75vh;
@@ -53,14 +58,13 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070') center/cover;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070') center/cover;
             padding: 0 5%;
         }
 
         .hero h1 { font-size: 4rem; margin-bottom: 10px; font-weight: 800; }
         .hero p { font-size: 1.4rem; color: var(--muted-text); max-width: 900px; margin-bottom: 30px; }
 
-        /* Split About Section */
         .split-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -69,14 +73,13 @@
             color: #333;
         }
 
-        .split-text { padding: 80px 15%; }
+        .split-text { padding: 80px 10%; }
         .split-image { 
             height: 100%; 
             min-height: 500px;
             background: url('https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80&w=2069') center/cover;
         }
 
-        /* Modern Service Grid */
         .service-showcase {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -88,7 +91,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 80px 15%;
+            padding: 80px 10%;
         }
 
         .showcase-image {
@@ -109,19 +112,31 @@
         }
         .btn-teal:hover { background: var(--jsl-orange); transform: translateY(-2px); }
 
-        /* Remote Support Box */
-        .support-container { padding: 100px 10%; text-align: center; background: var(--dark-bg); }
+        /* FIXED SCREENCONNECT BOX SECTION */
+        .support-container { 
+            padding: 100px 5%; 
+            text-align: center; 
+            background: var(--dark-bg); 
+        }
+
         .iframe-wrapper {
-            max-width: 500px;
-            height: 280px;
+            width: 100%;
+            max-width: 600px; /* Increased width for better visibility */
+            height: 450px;    /* Increased height to ensure box is fully visible */
             margin: 40px auto;
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 2px solid var(--jsl-teal);
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            background: #1a1a1a;
         }
 
-        /* Contact & Footer */
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .contact-footer {
             background: #000;
             padding: 80px 10%;
@@ -131,18 +146,23 @@
             gap: 40px;
         }
 
+        .contact-info h3 { color: var(--jsl-orange); font-size: 2rem; margin-top:0; }
+        .contact-info p { font-size: 1.1rem; margin: 15px 0; }
+        .contact-info i { color: var(--jsl-teal); margin-right: 15px; width: 20px; }
+
         footer { background: #000; text-align: center; padding: 40px; color: #555; border-top: 1px solid #111; }
 
         @media (max-width: 992px) {
             .split-section, .service-showcase, .contact-footer { grid-template-columns: 1fr; }
             .hero h1 { font-size: 2.5rem; }
+            .iframe-wrapper { height: 500px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#"><img src="jsl_logo_cropped.jpg" alt="JSL Logo" class="header-logo"></a>
+    <a href="#" class="logo-placeholder">JACKSON<span>SYSTEMS</span></a>
     <nav>
         <a href="#about">About</a>
         <a href="#services">Services</a>
@@ -165,7 +185,7 @@
         <p style="color: var(--jsl-teal); font-weight: bold; text-transform: uppercase;">About Us</p>
         <h2 style="font-size: 2.5rem;">Meet the Team Behind <span>Your IT Strategy</span></h2>
         <p>At Jackson Systems Limited, we don't just fix computers; we engineer business continuity. Led by Chris Jackson, our team of dedicated IT specialists provides top-tier Managed Services and Support across all industries.</p>
-        <p>From startups to large-scale corporations, we provide the technical roadmap and 24/7 vigilance required to stay ahead in a digital-first world. We are your outsourced CTO, your helpdesk, and your security operations center—all in one.</p>
+        <p>From startups to large-scale corporations, we provide the technical roadmap and 24/7 vigilance required to stay ahead in a digital-first world.</p>
         <a href="#contact" class="btn-teal">WORK WITH US</a>
     </div>
     <div class="split-image"></div>
@@ -175,7 +195,7 @@
     <div class="showcase-item">
         <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">01</span>
         <h2>Cyber Security</h2>
-        <p>In an era of increasing digital threats, we provide comprehensive security layers to protect your business data and your people. Our proactive approach includes real-time monitoring, threat detection, and employee awareness training.</p>
+        <p>Comprehensive security solutions to protect your business data and its people. We provide real-time monitoring and advanced threat protection.</p>
     </div>
     <div class="showcase-image" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000');"></div>
 
@@ -183,20 +203,20 @@
     <div class="showcase-item">
         <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">02</span>
         <h2>Cloud Solutions</h2>
-        <p>Scale with confidence. We deploy and manage efficient cloud infrastructures tailored to your specific operational needs, ensuring your team can collaborate securely from anywhere in the world.</p>
+        <p>Scalable and efficient cloud services tailored to your needs. Enable your team to work securely from anywhere.</p>
     </div>
 
     <div class="showcase-item">
         <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">03</span>
         <h2>Managed IT Services</h2>
-        <p>Full-spectrum proactive management of your IT infrastructure. We handle the updates, the backups, and the hardware lifecycle so you can focus entirely on growing your business.</p>
+        <p>Proactive management and support for your IT infrastructure. Big or Small, we ensure your systems run at peak performance.</p>
     </div>
     <div class="showcase-image" style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000');"></div>
 </section>
 
 <section id="remote-support" class="support-container">
     <h2 style="font-size: 2.5rem;">Instant Remote Assistance</h2>
-    <p style="color: var(--muted-text);">Partnered with ScreenConnect for industry-leading security and speed.</p>
+    <p style="color: var(--muted-text);">Enter the code provided by your technician below to join the session.</p>
     <div class="iframe-wrapper">
         <iframe src="https://jacksontech.screenconnect.com/Guest" title="Remote Support Session"></iframe>
     </div>
@@ -204,13 +224,13 @@
 
 <section id="contact" class="contact-footer">
     <div class="contact-info">
-        <h3 style="color: var(--jsl-orange); font-size: 2rem;">Get In Touch</h3>
-        <p><i class="fas fa-phone" style="color: var(--jsl-teal);"></i> 01482 935101</p>
-        <p><i class="fas fa-envelope" style="color: var(--jsl-teal);"></i> support@jacksontech.co.uk</p>
-        <p><i class="fas fa-map-marker-alt" style="color: var(--jsl-teal);"></i> Office 15 - Bespoke Business Center, Zeals Garth, HULL.</p>
+        <h3>Get In Touch</h3>
+        <p><i class="fas fa-phone"></i> <strong>Tel:</strong> 01482 935101</p>
+        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> support@jacksontech.co.uk</p>
+        <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> Office 15 - Bespoke Business Center, Zeals Garth, HULL.</p>
     </div>
-    <div style="display: flex; align-items: center; justify-content: center;">
-        <img src="jsl_logo_cropped.jpg" alt="Logo" style="max-width: 300px; opacity: 0.8;">
+    <div style="display: flex; align-items: center; justify-content: center; opacity: 0.2;">
+         <i class="fas fa-network-wired" style="font-size: 10rem; color: #fff;"></i>
     </div>
 </section>
 
