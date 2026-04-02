@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jackson Technology Services | IT & Systems Management</title>
+    <title>Jackson Systems Limited | Professional Managed IT Services</title>
     
-    <link rel="icon" type="image/png" href="image_6.png">
-    
+    <link rel="icon" type="image/png" href="jsl_icon_16x16 (1).png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --jsl-orange: #f38230; /* Primary brand orange from your logo */
-            --jsl-teal: #31a394;   /* Secondary accent teal */
+            --jsl-orange: #f38230;
+            --jsl-teal: #31a394;
             --dark-bg: #0c0c0c;
             --card-bg: #1a1a1a;
             --text: #ffffff;
@@ -32,7 +31,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 10%; /* Slightly less padding for logo fit */
+            padding: 10px 10%;
             background: rgba(0,0,0,0.95);
             border-bottom: 2px solid var(--jsl-orange);
             position: sticky;
@@ -40,69 +39,89 @@
             z-index: 1000;
         }
 
-        /* HEADER LOGO from image_5.png */
-        .header-logo {
-            max-height: 50px; /* Limits the logo height for header fit */
-            width: auto;
-        }
+        .header-logo { max-height: 50px; width: auto; }
 
-        nav a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 0.9rem; text-transform: uppercase; font-weight: 600; cursor: pointer; }
+        nav a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 0.9rem; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: 0.3s; }
         nav a:hover { color: var(--jsl-orange); }
 
-        /* Tech Tree Background Motif */
-        .tree-pattern {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.1;
-            z-index: 1;
-            pointer-events: none;
-        }
-
+        /* Hero Section */
         .hero {
             position: relative;
-            height: 60vh;
+            height: 75vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: radial-gradient(circle at center, #222 0%, #000 100%);
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070') center/cover;
             padding: 0 5%;
         }
 
-        .hero-content { position: relative; z-index: 2; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; font-weight: 800; }
+        .hero p { font-size: 1.4rem; color: var(--muted-text); max-width: 900px; margin-bottom: 30px; }
 
-        /* Remote Support Section (ScreenConnect Iframe Reveal) */
-        .support-container {
-            padding: 80px 10%;
-            text-align: center;
-            background: #111;
-            border-top: 1px solid #222;
+        /* Split About Section */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            background: #fff;
+            color: #333;
         }
 
+        .split-text { padding: 80px 15%; }
+        .split-image { 
+            height: 100%; 
+            min-height: 500px;
+            background: url('https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80&w=2069') center/cover;
+        }
+
+        /* Modern Service Grid */
+        .service-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #f4f4f4;
+            color: #222;
+        }
+
+        .showcase-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 15%;
+        }
+
+        .showcase-image {
+            min-height: 450px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .btn-teal {
+            background: var(--jsl-teal);
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        .btn-teal:hover { background: var(--jsl-orange); transform: translateY(-2px); }
+
+        /* Remote Support Box */
+        .support-container { padding: 100px 10%; text-align: center; background: var(--dark-bg); }
         .iframe-wrapper {
-            max-width: 450px;
-            height: 250px;
+            max-width: 500px;
+            height: 280px;
             margin: 40px auto;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            border: 2px solid var(--jsl-teal);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            background: #222;
+            border: 1px solid #333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
-        .iframe-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .section-padding { padding: 80px 10%; position: relative; z-index: 2; }
-        h2 { font-size: 2.5rem; margin-bottom: 20px; }
-        .sub-header { color: var(--jsl-teal); text-transform: uppercase; font-weight: 700; font-size: 0.9rem; }
-
-        /* Contact Section and Footer */
+        /* Contact & Footer */
         .contact-footer {
             background: #000;
             padding: 80px 10%;
@@ -112,32 +131,20 @@
             gap: 40px;
         }
 
-        .contact-info h3 { color: var(--jsl-orange); margin-top: 0; }
-        .contact-info p { margin: 10px 0; font-size: 1.1rem; }
-        .contact-info i { color: var(--jsl-teal); margin-right: 15px; width: 20px; }
+        footer { background: #000; text-align: center; padding: 40px; color: #555; border-top: 1px solid #111; }
 
-        footer {
-            background: #000;
-            text-align: center;
-            padding: 30px;
-            color: #555;
-            font-size: 0.8rem;
-            border-top: 1px solid #111;
-        }
-
-        @media (max-width: 768px) {
-            .contact-footer { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.2rem; }
+        @media (max-width: 992px) {
+            .split-section, .service-showcase, .contact-footer { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#"><img src="image_5.png" alt="Jackson Systems Limited Logo" class="header-logo"></a>
-    
+    <a href="#"><img src="jsl_logo_cropped.jpg" alt="JSL Logo" class="header-logo"></a>
     <nav>
-        <a href="#about">Our Story</a>
+        <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#remote-support" style="color: var(--jsl-teal);">Remote Support</a>
         <a href="#contact">Contact</a>
@@ -145,50 +152,70 @@
 </header>
 
 <section class="hero">
-    <svg class="tree-pattern" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#f38230" stroke-width="1.5" fill="none">
-            <path d="M500 0 V300 M500 300 L300 450 M500 300 L700 450 M300 450 V600 M700 450 V600" />
-            <circle cx="500" cy="300" r="4" fill="#f38230" />
-            <circle cx="300" cy="450" r="4" fill="#f38230" />
-            <circle cx="700" cy="450" r="4" fill="#f38230" />
-        </g>
-    </svg>
     <div class="hero-content">
+        <p style="color: var(--jsl-orange); text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">Welcome</p>
         <h1>Empowering Your Business</h1>
-        <p>Strategic IT solutions and systems management specialized for businesses of all sizes.</p>
+        <p>Strategic IT solutions and proactive systems management tailored for the modern enterprise.</p>
+        <a href="#services" class="btn-teal" style="font-size: 1.1rem; padding: 15px 40px;">GET STARTED</a>
     </div>
 </section>
 
+<section id="about" class="split-section">
+    <div class="split-text">
+        <p style="color: var(--jsl-teal); font-weight: bold; text-transform: uppercase;">About Us</p>
+        <h2 style="font-size: 2.5rem;">Meet the Team Behind <span>Your IT Strategy</span></h2>
+        <p>At Jackson Systems Limited, we don't just fix computers; we engineer business continuity. Led by Chris Jackson, our team of dedicated IT specialists provides top-tier Managed Services and Support across all industries.</p>
+        <p>From startups to large-scale corporations, we provide the technical roadmap and 24/7 vigilance required to stay ahead in a digital-first world. We are your outsourced CTO, your helpdesk, and your security operations center—all in one.</p>
+        <a href="#contact" class="btn-teal">WORK WITH US</a>
+    </div>
+    <div class="split-image"></div>
+</section>
+
+<section id="services" class="service-showcase">
+    <div class="showcase-item">
+        <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">01</span>
+        <h2>Cyber Security</h2>
+        <p>In an era of increasing digital threats, we provide comprehensive security layers to protect your business data and your people. Our proactive approach includes real-time monitoring, threat detection, and employee awareness training.</p>
+    </div>
+    <div class="showcase-image" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000');"></div>
+
+    <div class="showcase-image" style="background-image: url('https://images.unsplash.com/photo-1506220926022-cc5c12acdb35?auto=format&fit=crop&q=80&w=1000');"></div>
+    <div class="showcase-item">
+        <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">02</span>
+        <h2>Cloud Solutions</h2>
+        <p>Scale with confidence. We deploy and manage efficient cloud infrastructures tailored to your specific operational needs, ensuring your team can collaborate securely from anywhere in the world.</p>
+    </div>
+
+    <div class="showcase-item">
+        <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">03</span>
+        <h2>Managed IT Services</h2>
+        <p>Full-spectrum proactive management of your IT infrastructure. We handle the updates, the backups, and the hardware lifecycle so you can focus entirely on growing your business.</p>
+    </div>
+    <div class="showcase-image" style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000');"></div>
+</section>
+
 <section id="remote-support" class="support-container">
-    <div class="sub-header">Connect with a Technician</div>
-    <h2>Join a Public Session</h2>
-    <p>Enter the code provided by your technician in the box below to start your support session.</p>
-    
+    <h2 style="font-size: 2.5rem;">Instant Remote Assistance</h2>
+    <p style="color: var(--muted-text);">Partnered with ScreenConnect for industry-leading security and speed.</p>
     <div class="iframe-wrapper">
         <iframe src="https://jacksontech.screenconnect.com/Guest" title="Remote Support Session"></iframe>
     </div>
 </section>
 
-<section id="about" class="section-padding">
-    <div class="sub-header">OUR STORY</div>
-    <h2>Meet Chris Jackson</h2>
-    <p>Jackson Technology Services is a leading provider of IT solutions, specialising in support and systems management for businesses of all sizes. Founded by Chris Jackson in 2017, we draw on decades of experience in corporate and education sectors.</p>
-</section>
-
 <section id="contact" class="contact-footer">
     <div class="contact-info">
-        <h3>Contact Us</h3>
-        <p><i class="fas fa-phone"></i> <strong>Tel:</strong> 01482 935101</p>
-        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> support@jacksontech.co.uk</p>
-        <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> Office 15 - Bespoke Business Center, Zeals Garth, HULL.</p>
+        <h3 style="color: var(--jsl-orange); font-size: 2rem;">Get In Touch</h3>
+        <p><i class="fas fa-phone" style="color: var(--jsl-teal);"></i> 01482 935101</p>
+        <p><i class="fas fa-envelope" style="color: var(--jsl-teal);"></i> support@jacksontech.co.uk</p>
+        <p><i class="fas fa-map-marker-alt" style="color: var(--jsl-teal);"></i> Office 15 - Bespoke Business Center, Zeals Garth, HULL.</p>
     </div>
-    <div style="opacity: 0.5; display: flex; align-items: center; justify-content: center;">
-        <i class="fas fa-network-wired" style="font-size: 8rem; color: var(--jsl-orange);"></i>
+    <div style="display: flex; align-items: center; justify-content: center;">
+        <img src="jsl_logo_cropped.jpg" alt="Logo" style="max-width: 300px; opacity: 0.8;">
     </div>
 </section>
 
 <footer>
-    <p>&copy; 2026 Jackson Technology Services Limited. Registered in the United Kingdom.</p>
+    <p>&copy; 2026 Jackson Systems Limited. All Rights Reserved.</p>
 </footer>
 
 </body>
