@@ -3,60 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jackson Technology Services | IT & Cybersecurity</title>
+    <title>Jackson Technology Services | IT & Systems Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --jsl-orange: #f38230; /* Your Logo Orange */
-            --jsl-teal: #31a394;   /* Your Button Teal */
-            --dark-bg: #0f0f0f;
+            --jsl-orange: #f38230; /* Logo Orange */
+            --jsl-teal: #31a394;   /* Button/Accent Teal */
+            --dark-bg: #0c0c0c;
             --card-bg: #1a1a1a;
             --text: #ffffff;
+            --muted-text: #b0b0b0;
         }
 
         body {
-            font-family: 'Mulish', sans-serif;
+            font-family: 'Mulish', 'Segoe UI', sans-serif;
             margin: 0;
             background-color: var(--dark-bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        /* Lawrence Systems Style Header */
+        /* Lawrence Systems Style Top-Bar */
+        .top-bar {
+            background: #000;
+            padding: 10px 10%;
+            display: flex;
+            justify-content: flex-end;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #222;
+        }
+        .top-bar a { color: var(--jsl-teal); text-decoration: none; font-weight: bold; margin-left: 20px; }
+        .top-bar a:hover { color: var(--jsl-orange); }
+
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
-            background: #000;
+            padding: 20px 10%;
+            background: rgba(0,0,0,0.9);
             border-bottom: 2px solid var(--jsl-orange);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
-        .logo-container { display: flex; align-items: center; gap: 10px; }
-        .logo-text { font-weight: 800; font-size: 1.5rem; color: #fff; letter-spacing: 1px; }
+        .logo-text { font-weight: 800; font-size: 1.6rem; color: #fff; letter-spacing: 1px; }
         .logo-text span { color: var(--jsl-orange); }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 25px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            font-weight: 600;
+        nav a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 0.9rem; text-transform: uppercase; font-weight: 600; }
+        nav a:hover { color: var(--jsl-orange); }
+
+        /* The SVG Tech Tree Integrated as a Background */
+        .tree-pattern {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.1;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .btn-remote {
-            background: var(--jsl-teal);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        /* Hero Section with Lawrence-style Tree */
+        /* Hero */
         .hero {
             position: relative;
             height: 70vh;
@@ -66,22 +73,12 @@
             align-items: center;
             text-align: center;
             background: radial-gradient(circle at center, #222 0%, #000 100%);
-            overflow: hidden;
             padding: 0 5%;
-        }
-
-        /* The SVG Tech Tree Background */
-        .tree-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0.2;
-            z-index: 1;
         }
 
         .hero-content { position: relative; z-index: 2; }
         .hero h1 { font-size: 3.5rem; margin-bottom: 20px; }
-        .hero p { font-size: 1.2rem; max-width: 800px; color: #ccc; }
+        .hero p { font-size: 1.2rem; color: var(--muted-text); max-width: 800px; margin: 0 auto; }
 
         .btn-main {
             background: var(--jsl-teal);
@@ -89,63 +86,81 @@
             padding: 15px 40px;
             text-decoration: none;
             font-size: 1.1rem;
-            border-radius: 5px;
+            border-radius: 4px;
             margin-top: 30px;
             display: inline-block;
             transition: 0.3s;
+            font-weight: 700;
         }
         .btn-main:hover { background: var(--jsl-orange); }
 
-        /* Content Sections */
-        .section-padding { padding: 80px 10%; }
+        /* General Section Styling */
+        .section-padding { padding: 80px 10%; position: relative; z-index: 2; }
+        h2 { font-size: 2.5rem; margin-bottom: 30px; }
+        h2 span { color: var(--jsl-orange); font-style: italic; font-weight: 300; }
+        .sub-header { color: var(--jsl-teal); text-transform: uppercase; font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; }
 
-        .about-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            background: #111;
-        }
+        /* Content Areas */
+        .about-text { color: var(--muted-text); max-width: 800px; }
+        
+        /* Proven Approach (image_2.png) */
+        .approach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
+        .approach-item { padding-left: 20px; border-left: 3px solid var(--jsl-orange); }
+        .approach-item h3 { color: #fff; margin-top: 0; }
 
-        .about-img img {
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid #333;
-        }
-
+        /* Service Cards (image_3.png and image_0.png) */
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            margin-top: 40px;
+            margin-top: 60px;
         }
 
         .service-card {
             background: var(--card-bg);
-            padding: 40px;
-            border-radius: 10px;
-            border-bottom: 4px solid var(--jsl-orange);
+            padding: 30px;
+            border-radius: 4px;
+            border-top: 4px solid var(--jsl-teal);
             transition: 0.3s;
         }
-        .service-card:hover { transform: translateY(-10px); background: #222; }
-        .service-card i { font-size: 3rem; color: var(--jsl-teal); margin-bottom: 20px; }
+        .service-card:hover { transform: translateY(-5px); border-top-color: var(--jsl-orange); background: #222; }
+        .service-card i { font-size: 2.5rem; color: var(--jsl-orange); margin-bottom: 15px; }
+        .service-card h3 { color: #fff; margin-top: 0; font-weight: 600;}
 
         footer {
             background: #000;
             text-align: center;
-            padding: 40px;
+            padding: 50px;
             border-top: 1px solid #333;
             color: #777;
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
-            .about-split { grid-template-columns: 1fr; }
             .hero h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .approach-grid { grid-template-columns: 1fr; }
             nav { display: none; }
         }
     </style>
 </head>
 <body>
+
+<svg class="tree-pattern" viewBox="0 0 1000 2000" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#f38230" stroke-width="1.5" fill="none">
+        <path d="M500 0 V300 M500 300 L300 450 M500 300 L700 450 M300 450 V600 M700 450 V600 M300 600 L150 750 M300 600 L450 750 M700 600 L550 750 M700 600 L850 750 M500 1200 V1500" />
+        <circle cx="500" cy="300" r="4" fill="#f38230" />
+        <circle cx="300" cy="450" r="4" fill="#f38230" />
+        <circle cx="700" cy="450" r="4" fill="#f38230" />
+        <circle cx="150" cy="750" r="4" fill="#f38230" />
+        <circle cx="450" cy="750" r="4" fill="#f38230" />
+    </g>
+</svg>
+
+<div class="top-bar">
+    <a href="mailto:info@jacksontech.co.uk"><i class="fas fa-envelope"></i> Contact Us</a>
+    <a href="#"><i class="fas fa-user-lock"></i> Client Login</a>
+</div>
 
 <header>
     <div class="logo-container">
@@ -153,64 +168,76 @@
     </div>
     <nav>
         <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="#" class="btn-remote">Remote Support</a>
+        <a href="#about">Our Story</a>
+        <a href="#approach">Our Approach</a>
+        <a href="mailto:info@jacksontech.co.uk" class="btn-remote">Request Support</a>
     </nav>
 </header>
 
 <section class="hero">
-    <svg class="tree-overlay" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="#f38230" stroke-width="1.5" fill="none">
-            <path d="M400 600 V450 M400 450 L300 350 M400 450 L500 350 M300 350 L200 250 M300 350 L350 250 M500 350 L450 250 M500 350 L600 250" />
-            <circle cx="400" cy="450" r="4" fill="#f38230" />
-            <circle cx="300" cy="350" r="4" fill="#f38230" />
-            <circle cx="500" cy="350" r="4" fill="#f38230" />
-        </g>
-    </svg>
-
     <div class="hero-content">
         <h1>Empowering Your Business</h1>
-        <p>Strategic IT Operations, Cybersecurity, and Salesforce Optimization tailored for small to large businesses.</p>
+        <p>Strategic IT solutions and systems management specialized for businesses of all sizes, from Small to Large.</p>
         <a href="#services" class="btn-main">Get Started</a>
     </div>
 </section>
 
-<section id="about" class="section-padding about-split">
-    <div>
-        <h5 style="color: var(--jsl-teal); text-transform: uppercase;">About Us</h5>
-        <h2>Meet Chris Jackson, <span>your</span> IT specialist</h2>
-        <p>Providing Businesses from Small to Large with top-notch IT Services & Support. We support any Business within any Industry. We do it all.</p>
-        <a href="#" class="btn-main" style="padding: 10px 25px; font-size: 0.9rem;">Read More</a>
+<section id="about" class="section-padding">
+    <div class="sub-header">OUR STORY</div>
+    <h2>Meet Chris Jackson</h2>
+    <div class="about-text">
+        <p><strong>Jackson Technology Services is a leading provider of IT solutions, specialising in support and systems management for businesses of all sizes.</strong></p>
+        <p>Technology plays a crucial role in the operations of most businesses today. Jackson Systems, founded by Chris Jackson in 2017, has extensive experience in helping both large and small businesses navigate the complexities of technology. Drawing on Chris’ decades of experience in the corporate and education sectors, the company offers a wide range of IT solutions, from helpdesk support to the deployment, implementation, and management of large-scale systems. With a strong reputation in the managed services provider (MSP) market, Jackson Systems has successfully supported businesses in various industries across multiple regions in the United Kingdom.</p>
+        <p>Our clients equate an unwavering IT Infrastructure to the efficient running of business, we are always by their side when they need our services the most.</p>
     </div>
-    <div class="about-img">
-        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80" alt="Tech Setup">
+</section>
+
+<section id="approach" class="section-padding" style="background: #111;">
+    <div class="sub-header">OUR APPROACH</div>
+    <h2>Our Proven Approach to IT Solutions</h2>
+    <div class="approach-grid">
+        <div class="approach-item">
+            <h3>Customised Solutions</h3>
+            <p style="color: var(--muted-text);">We believe in tailoring our services to meet the unique needs of each client, ensuring that our solutions align perfectly with their goals and operations.</p>
+        </div>
+        <div class="approach-item">
+            <h3>Continuous Support</h3>
+            <p style="color: var(--muted-text);">Our dedicated team provides round-the-clock support to address any IT issues promptly, guaranteeing maximum uptime and performance for our clients' systems.</p>
+        </div>
     </div>
 </section>
 
 <section id="services" class="section-padding">
-    <h2 style="text-align: center;">Our Expertise</h2>
+    <h2 style="text-align: center;">Managed <span>IT</span> Services</h2>
+    <p style="text-align: center; color: var(--muted-text); max-width: 600px; margin: 0 auto;">A complete outsourced IT Department for your business, driving peak efficiency and minimizing downtime.</p>
+    
     <div class="service-grid">
         <div class="service-card">
-            <i class="fas fa-shield-halved"></i>
-            <h3>Cybersecurity</h3>
-            <p>From compliance audits to active monitoring, we keep your business data safe from evolving threats.</p>
+            <i class="fas fa-headset"></i>
+            <h3>Remote Support</h3>
+            <p>Our remote repair service makes it easy for everyone with computer problems no matter where you are in the world.</p>
         </div>
         <div class="service-card">
-            <i class="fab fa-salesforce"></i>
-            <h3>Salesforce</h3>
-            <p>Certified optimization and management to ensure your CRM drives actual business value.</p>
+            <i class="fas fa-satellite-dish"></i>
+            <h3>Network Consulting</h3>
+            <p>We will work closely with you to bring your network to life. Whether you are setting up a brand new network or fixing misconfiguration, we can help.</p>
         </div>
         <div class="service-card">
-            <i class="fas fa-network-wired"></i>
-            <h3>Managed IT</h3>
-            <p>Remote and on-site support, infrastructure management, and vendor oversight.</p>
+            <i class="fas fa-tools"></i>
+            <h3>On-Site Support</h3>
+            <p>Our technicians can come to your business and get things back up and running fast. We support both your home and business needs.</p>
+        </div>
+        <div class="service-card">
+            <i class="fas fa-server"></i>
+            <h3>Infrastructure Management</h3>
+            <p>Managed systems management for large-scale systems, ensuring an unwavering IT infrastructure to run your business efficiently.</p>
         </div>
     </div>
 </section>
 
 <footer>
-    <p>&copy; 2026 Jackson Technology Solutions Limited. All rights reserved.</p>
+    <p>&copy; 2026 Jackson Technology Services Limited. Registered in the United Kingdom.</p>
+    <p>IT Specialist serving Small to Large Businesses since 2017.</p>
 </footer>
 
 </body>
