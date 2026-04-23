@@ -3,239 +3,1459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jackson Systems Limited | Professional Managed IT Services</title>
-    
+    <title>Jackson Systems Limited | Managed IT Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         :root {
-            --jsl-orange: #f38230;
-            --jsl-teal: #31a394;
-            --dark-bg: #0c0c0c;
-            --card-bg: #1a1a1a;
-            --text: #ffffff;
-            --muted-text: #b0b0b0;
+            --jsl-blue:    #0d5fa3;
+            --jsl-blue-lt: #1a7fd4;
+            --jsl-teal:    #00b4a0;
+            --jsl-gold:    #f0a500;
+            --jsl-dark:    #06111f;
+            --jsl-navy:    #0a1e35;
+            --jsl-mid:     #102b47;
+            --jsl-border:  rgba(0,180,160,0.25);
+            --jsl-text:    #d8e8f5;
+            --jsl-muted:   #7a9ab8;
+            --jsl-white:   #ffffff;
         }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Mulish', sans-serif;
-            margin: 0;
-            background-color: var(--dark-bg);
-            color: var(--text);
+            font-family: 'Barlow', sans-serif;
+            background-color: var(--jsl-dark);
+            color: var(--jsl-text);
             line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        header {
+        /* ============================================================
+           CISCO-INSPIRED BRIDGE MARK (SVG)
+           The Cisco logo is the Golden Gate bridge rendered as
+           vertical bars of graduating height. We do ours similarly —
+           abstract network/bridge motif in teal+blue.
+        ============================================================ */
+        .brand-mark {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px 10%;
-            background: rgba(0,0,0,0.95);
-            border-bottom: 2px solid var(--jsl-orange);
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .bridge-icon {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 32px;
+        }
+
+        .bridge-icon span {
+            display: block;
+            width: 5px;
+            border-radius: 2px 2px 0 0;
+            background: var(--jsl-teal);
+            transition: height 0.3s ease;
+        }
+
+        /* Heights form a bridge silhouette: low-high-higher-highest-higher-high-low */
+        .bridge-icon span:nth-child(1) { height: 12px; }
+        .bridge-icon span:nth-child(2) { height: 20px; }
+        .bridge-icon span:nth-child(3) { height: 27px; }
+        .bridge-icon span:nth-child(4) { height: 32px; background: var(--jsl-blue-lt); }
+        .bridge-icon span:nth-child(5) { height: 27px; }
+        .bridge-icon span:nth-child(6) { height: 20px; }
+        .bridge-icon span:nth-child(7) { height: 12px; }
+
+        .brand-mark:hover .bridge-icon span { background: var(--jsl-gold); }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+        }
+        .brand-text .b1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: 1.45rem;
+            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .brand-text .b2 {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--jsl-teal);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* ============================================================
+           HEADER
+        ============================================================ */
+        header {
             position: sticky;
             top: 0;
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 6%;
+            background: rgba(6, 17, 31, 0.97);
+            border-bottom: 1px solid var(--jsl-border);
+            backdrop-filter: blur(10px);
         }
 
-        /* Temporary Text Logo until images are ready */
-        .logo-placeholder { 
-            font-weight: 800; 
-            font-size: 1.5rem; 
-            color: #fff; 
+        nav { display: flex; align-items: center; gap: 8px; }
+
+        nav a {
+            color: var(--jsl-muted);
             text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 8px 14px;
+            border-radius: 3px;
+            transition: all 0.2s;
         }
-        .logo-placeholder span { color: var(--jsl-orange); }
+        nav a:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
-        nav a { color: #fff; text-decoration: none; margin-left: 25px; font-size: 0.9rem; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        nav a:hover { color: var(--jsl-orange); }
+        .nav-cta {
+            background: var(--jsl-teal) !important;
+            color: #fff !important;
+            font-weight: 700 !important;
+            padding: 9px 20px !important;
+            border-radius: 3px;
+        }
+        .nav-cta:hover { background: var(--jsl-gold) !important; }
 
+        /* ============================================================
+           HERO
+        ============================================================ */
         .hero {
             position: relative;
-            height: 75vh;
+            min-height: 88vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070') center/cover;
-            padding: 0 5%;
+            overflow: hidden;
+            background: var(--jsl-dark);
         }
 
-        .hero h1 { font-size: 4rem; margin-bottom: 10px; font-weight: 800; }
-        .hero p { font-size: 1.4rem; color: var(--muted-text); max-width: 900px; margin-bottom: 30px; }
-
-        .split-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            background: #fff;
-            color: #333;
+        /* Animated grid / circuit background */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(13, 95, 163, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(13, 95, 163, 0.12) 1px, transparent 1px);
+            background-size: 48px 48px;
+            animation: gridShift 30s linear infinite;
         }
 
-        .split-text { padding: 80px 10%; }
-        .split-image { 
-            height: 100%; 
-            min-height: 500px;
-            background: url('https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80&w=2069') center/cover;
+        @keyframes gridShift {
+            0%   { background-position: 0 0; }
+            100% { background-position: 48px 48px; }
         }
 
-        .service-showcase {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            background: #f4f4f4;
-            color: #222;
+        /* Radial glow */
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 60% 50%, rgba(0,180,160,0.08) 0%, transparent 70%),
+                        radial-gradient(ellipse 50% 40% at 20% 70%, rgba(13,95,163,0.15) 0%, transparent 60%),
+                        linear-gradient(to bottom, transparent 60%, var(--jsl-dark) 100%);
         }
 
-        .showcase-item {
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            padding: 0 6%;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero-eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--jsl-teal);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 80px 10%;
+            align-items: center;
+            gap: 12px;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--jsl-teal);
         }
 
-        .showcase-image {
-            min-height: 450px;
-            background-size: cover;
-            background-position: center;
+        .hero h1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2.8rem, 6vw, 5.5rem);
+            line-height: 1.05;
+            color: #fff;
+            margin-bottom: 24px;
         }
 
-        .btn-teal {
+        .hero h1 em {
+            font-style: normal;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--jsl-teal);
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--jsl-muted);
+            max-width: 580px;
+            margin-bottom: 48px;
+            line-height: 1.75;
+        }
+
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--jsl-blue);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 15px 32px;
+            border-radius: 3px;
+            transition: all 0.25s;
+            border: 2px solid var(--jsl-blue);
+        }
+        .btn-primary:hover {
+            background: var(--jsl-blue-lt);
+            border-color: var(--jsl-blue-lt);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(13,95,163,0.4);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--jsl-teal);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 15px 32px;
+            border-radius: 3px;
+            border: 2px solid var(--jsl-teal);
+            transition: all 0.25s;
+        }
+        .btn-outline:hover {
             background: var(--jsl-teal);
             color: #fff;
-            padding: 12px 30px;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: 0.3s;
-        }
-        .btn-teal:hover { background: var(--jsl-orange); transform: translateY(-2px); }
-
-        /* FIXED SCREENCONNECT BOX SECTION */
-        .support-container { 
-            padding: 100px 5%; 
-            text-align: center; 
-            background: var(--dark-bg); 
+            transform: translateY(-2px);
         }
 
-        .iframe-wrapper {
-            width: 100%;
-            max-width: 600px; /* Increased width for better visibility */
-            height: 450px;    /* Increased height to ensure box is fully visible */
-            margin: 40px auto;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid var(--jsl-teal);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            background: #1a1a1a;
+        /* Hero stats strip */
+        .hero-stats {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--jsl-navy);
+            border-top: 1px solid var(--jsl-border);
+            display: flex;
+            justify-content: center;
+            z-index: 3;
+        }
+        .stat-item {
+            padding: 28px 60px;
+            text-align: center;
+            border-right: 1px solid var(--jsl-border);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-num {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--jsl-teal);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--jsl-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
         }
 
-        .iframe-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        /* ============================================================
+           SECTION HELPERS
+        ============================================================ */
+        section { padding: 100px 6%; }
+
+        .section-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--jsl-teal);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .section-tag::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 2px;
+            background: var(--jsl-teal);
         }
 
-        .contact-footer {
-            background: #000;
-            padding: 80px 10%;
-            border-top: 3px solid var(--jsl-orange);
+        .section-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .section-sub {
+            color: var(--jsl-muted);
+            font-size: 1.05rem;
+            max-width: 560px;
+            line-height: 1.75;
+        }
+
+        /* ============================================================
+           ABOUT SECTION
+        ============================================================ */
+        #about {
+            background: var(--jsl-navy);
+            border-top: 1px solid var(--jsl-border);
+            border-bottom: 1px solid var(--jsl-border);
+        }
+
+        .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 80px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .contact-info h3 { color: var(--jsl-orange); font-size: 2rem; margin-top:0; }
-        .contact-info p { font-size: 1.1rem; margin: 15px 0; }
-        .contact-info i { color: var(--jsl-teal); margin-right: 15px; width: 20px; }
+        .about-image-block {
+            position: relative;
+        }
 
-        footer { background: #000; text-align: center; padding: 40px; color: #555; border-top: 1px solid #111; }
+        .about-image-block img {
+            width: 100%;
+            display: block;
+            border-radius: 4px;
+            filter: grayscale(20%) contrast(1.05);
+        }
 
-        @media (max-width: 992px) {
-            .split-section, .service-showcase, .contact-footer { grid-template-columns: 1fr; }
+        /* Decorative corner accent — Cisco used geometric trim */
+        .about-image-block::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            width: 80px;
+            height: 80px;
+            border-top: 3px solid var(--jsl-teal);
+            border-left: 3px solid var(--jsl-teal);
+        }
+        .about-image-block::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            right: -12px;
+            width: 80px;
+            height: 80px;
+            border-bottom: 3px solid var(--jsl-blue);
+            border-right: 3px solid var(--jsl-blue);
+        }
+
+        .about-checklist {
+            list-style: none;
+            margin-top: 32px;
+        }
+        .about-checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--jsl-border);
+            font-size: 0.95rem;
+        }
+        .about-checklist li i {
+            color: var(--jsl-teal);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        /* ============================================================
+           SERVICES
+        ============================================================ */
+        #services { background: var(--jsl-dark); }
+
+        .services-header {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: var(--jsl-border);
+            border: 1px solid var(--jsl-border);
+        }
+
+        .service-card {
+            background: var(--jsl-navy);
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--jsl-blue);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover { background: var(--jsl-mid); }
+        .service-card:hover::before { transform: scaleX(1); }
+
+        .service-card:hover .service-icon i {
+            color: var(--jsl-gold);
+        }
+
+        .service-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(13,95,163,0.2);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            border: 1px solid rgba(13,95,163,0.4);
+            transition: all 0.3s;
+        }
+
+        .service-icon i {
+            font-size: 1.4rem;
+            color: var(--jsl-teal);
+            transition: color 0.3s;
+        }
+
+        .service-num {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.1);
+            letter-spacing: 2px;
+        }
+
+        .service-card h3 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .service-card p {
+            color: var(--jsl-muted);
+            font-size: 0.9rem;
+            line-height: 1.75;
+        }
+
+        .vendor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .vendor-tags span {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--jsl-teal);
+            border: 1px solid rgba(0,180,160,0.35);
+            background: rgba(0,180,160,0.06);
+            padding: 4px 10px;
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================================
+           MANAGED IT SECTION
+        ============================================================ */
+        #managed-it {
+            background: var(--jsl-dark);
+            border-top: 1px solid var(--jsl-border);
+        }
+
+        .mit-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .mit-pills {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 24px;
+            margin-top: 32px;
+        }
+
+        .mit-pills span {
+            font-size: 0.88rem;
+            color: var(--jsl-text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mit-pills span i {
+            color: var(--jsl-teal);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        /* Visual card */
+        .mit-visual {
+            display: flex;
+            justify-content: center;
+        }
+
+        .mit-card {
+            background: var(--jsl-navy);
+            border: 1px solid var(--jsl-border);
+            border-radius: 8px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 360px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+        }
+
+        .mit-card-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            background: var(--jsl-mid);
+            border: 1px solid var(--jsl-border);
+            border-radius: 6px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .mit-card-top i {
+            font-size: 1.8rem;
+            color: var(--jsl-muted);
+        }
+
+        .mit-card-top span {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .mit-flow-line {
+            width: 2px;
+            height: 32px;
+            background: linear-gradient(to bottom, var(--jsl-border), var(--jsl-teal));
+            margin: 0 auto;
+        }
+
+        .mit-card-mid {
+            background: rgba(0,180,160,0.08);
+            border: 1px solid rgba(0,180,160,0.4);
+            border-radius: 6px;
+            padding: 16px 24px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mit-jsl-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mit-jsl-badge span {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .mit-card-mid p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--jsl-teal);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .mit-flow-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        .mit-flow-item {
+            background: var(--jsl-mid);
+            border: 1px solid var(--jsl-border);
+            border-radius: 5px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 7px;
+            transition: border-color 0.3s;
+        }
+
+        .mit-flow-item:hover { border-color: var(--jsl-teal); }
+
+        .mit-flow-item i {
+            color: var(--jsl-blue-lt);
+            font-size: 1.1rem;
+        }
+
+        .mit-flow-item span {
+            font-size: 0.7rem;
+            color: var(--jsl-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 1024px) {
+            .mit-inner { grid-template-columns: 1fr; }
+            .mit-visual { margin-top: 20px; }
+        }
+
+        /* ============================================================
+           REMOTE SUPPORT SECTION
+        ============================================================ */
+        #remote-support {
+            background: var(--jsl-navy);
+            border-top: 1px solid var(--jsl-border);
+            border-bottom: 1px solid var(--jsl-border);
+        }
+
+        .remote-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .remote-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .remote-header .section-tag {
+            justify-content: center;
+        }
+
+        .remote-header .section-tag::before { display: none; }
+
+        .remote-header .section-sub {
+            margin: 0 auto;
+        }
+
+        /* Monitor shell */
+        .monitor-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+        .monitor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .monitor-screen {
+            width: 100%;
+            background: #020c18;
+            border: 3px solid #1e3a55;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(0,180,160,0.15),
+                0 40px 80px rgba(0,0,0,0.7),
+                inset 0 0 60px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        /* Subtle screen glare */
+        .monitor-screen::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 40%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.025), transparent);
+            pointer-events: none;
+            z-index: 1;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .sc-titlebar {
+            background: #0d1e30;
+            padding: 11px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(0,180,160,0.2);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sc-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sc-url {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--jsl-muted);
+            margin-left: 8px;
+        }
+
+        .monitor-screen iframe {
+            width: 100%;
+            height: 480px;
+            border: none;
+            display: block;
+        }
+
+        .monitor-neck {
+            width: 60px;
+            height: 28px;
+            background: #111e2e;
+            border-left: 3px solid #1e3a55;
+            border-right: 3px solid #1e3a55;
+        }
+
+        .monitor-base {
+            width: 220px;
+            height: 14px;
+            background: #111e2e;
+            border: 3px solid #1e3a55;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .monitor-screen iframe { height: 360px; }
+            .monitor-base { width: 140px; }
+        }
+
+
+
+        /* ============================================================
+           COLOCATION SECTION
+        ============================================================ */
+        #colocation {
+            background: var(--jsl-dark);
+            border-top: 1px solid var(--jsl-border);
+        }
+
+        .colo-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        /* Rack visual */
+        .colo-rack {
+            background: #040d18;
+            border: 2px solid #1e3a55;
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: 0 0 0 6px #0a1628, 0 0 0 8px #1e3a55, 0 32px 60px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .rack-unit {
+            background: #0d1e30;
+            border: 1px solid #1a3350;
+            border-radius: 3px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--jsl-muted);
+        }
+
+        .rack-unit span:nth-child(2) { flex: 1; }
+
+        .rack-unit.ru-active { border-color: rgba(0,180,160,0.3); }
+        .rack-unit.ru-dark   { opacity: 0.4; }
+
+        .ru-led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            background: var(--jsl-teal);
+            box-shadow: 0 0 6px var(--jsl-teal);
+            animation: ledPulse 2.5s ease-in-out infinite;
+        }
+
+        .ru-led.ru-amber {
+            background: var(--jsl-gold);
+            box-shadow: 0 0 6px var(--jsl-gold);
+            animation: ledPulse 1.2s ease-in-out infinite;
+        }
+
+        .ru-led.ru-off {
+            background: #1a2a3a;
+            box-shadow: none;
+            animation: none;
+        }
+
+        @keyframes ledPulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.4; }
+        }
+
+        .ru-status {
+            font-size: 0.6rem;
+            letter-spacing: 1.5px;
+            color: var(--jsl-teal);
+            text-transform: uppercase;
+        }
+
+        .ru-status.ru-s-amber { color: var(--jsl-gold); }
+        .ru-status.ru-s-off   { color: #2a3a4a; }
+
+        .rack-footer {
+            margin-top: 6px;
+            padding: 10px 14px;
+            background: #040d18;
+            border: 1px solid #1a3350;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            color: #2a4a6a;
+        }
+
+        .rack-footer span { display: flex; align-items: center; gap: 6px; }
+        .rack-footer i { color: var(--jsl-blue); }
+
+        /* Colo text side */
+        .colo-features {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 36px;
+        }
+
+        .colo-feat {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .colo-feat > i {
+            font-size: 1.1rem;
+            color: var(--jsl-teal);
+            margin-top: 3px;
+            flex-shrink: 0;
+            width: 20px;
+            text-align: center;
+        }
+
+        .colo-feat strong {
+            display: block;
+            color: #fff;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .colo-feat span {
+            color: var(--jsl-muted);
+            font-size: 0.88rem;
+            line-height: 1.65;
+        }
+
+        @media (max-width: 1024px) {
+            .colo-inner { grid-template-columns: 1fr; }
+            .colo-visual { order: 2; }
+            .colo-text   { order: 1; }
+        }
+
+        /* ============================================================
+           CONTACT
+        ============================================================ */
+        #contact { background: var(--jsl-dark); }
+
+        .contact-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: var(--jsl-border);
+            margin-top: 60px;
+            border: 1px solid var(--jsl-border);
+        }
+
+        .contact-card {
+            background: var(--jsl-navy);
+            padding: 48px 48px;
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .contact-card-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(0,180,160,0.1);
+            border: 1px solid rgba(0,180,160,0.3);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-card-icon i { font-size: 1.3rem; color: var(--jsl-teal); }
+
+        .contact-card-body strong {
+            display: block;
+            color: var(--jsl-muted);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .contact-card-body a,
+        .contact-card-body p {
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .contact-card-body a:hover { color: var(--jsl-teal); }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+        footer {
+            background: #020810;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 40px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        footer p { color: #334; font-size: 0.8rem; }
+        footer .footer-links { display: flex; gap: 24px; }
+        footer .footer-links a { color: #445; text-decoration: none; font-size: 0.8rem; }
+        footer .footer-links a:hover { color: var(--jsl-teal); }
+
+        /* ============================================================
+           RESPONSIVE
+        ============================================================ */
+        @media (max-width: 1024px) {
+            .about-grid,
+            .support-inner,
+            .contact-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .hero-stats { position: static; }
+            .stat-item { padding: 24px 30px; }
+        }
+
+        @media (max-width: 640px) {
+            .services-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 2.5rem; }
-            .iframe-wrapper { height: 500px; }
+            .hero-stats { flex-direction: column; }
+            .stat-item { border-right: none; border-bottom: 1px solid var(--jsl-border); }
+            nav a:not(.nav-cta) { display: none; }
+            footer { flex-direction: column; text-align: center; }
         }
+
+        /* ============================================================
+           SUBTLE ENTRY ANIMATION
+        ============================================================ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-inner > * {
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards;
+        }
+        .hero-eyebrow { animation-delay: 0.1s; }
+        .hero h1      { animation-delay: 0.25s; }
+        .hero-sub     { animation-delay: 0.4s; }
+        .hero-actions { animation-delay: 0.55s; }
     </style>
 </head>
 <body>
 
+<!-- ============================================================
+     HEADER
+============================================================ -->
 <header>
-    <a href="#" class="logo-placeholder">JACKSON<span>SYSTEMS</span></a>
+    <a href="#" class="brand-mark">
+        <div class="bridge-icon">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+        </div>
+        <div class="brand-text">
+            <span class="b1">Jackson Systems</span>
+            <span class="b2">Managed IT Services</span>
+        </div>
+    </a>
     <nav>
         <a href="#about">About</a>
         <a href="#services">Services</a>
-        <a href="#remote-support" style="color: var(--jsl-teal);">Remote Support</a>
-        <a href="#contact">Contact</a>
+        <a href="#colocation">Colocation</a>
+        <a href="#remote-support">Remote Support</a>
+        <a href="#contact" class="nav-cta">Contact Us</a>
     </nav>
 </header>
 
+<!-- ============================================================
+     HERO
+============================================================ -->
 <section class="hero">
-    <div class="hero-content">
-        <p style="color: var(--jsl-orange); text-transform: uppercase; letter-spacing: 2px; font-weight: bold;">Welcome</p>
-        <h1>Empowering Your Business</h1>
-        <p>Strategic IT solutions and proactive systems management tailored for the modern enterprise.</p>
-        <a href="#services" class="btn-teal" style="font-size: 1.1rem; padding: 15px 40px;">GET STARTED</a>
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+        <p class="hero-eyebrow">Jackson Systems Limited</p>
+        <h1>
+            Your Network.<br>
+            Your <em>Security.</em><br>
+            Your Peace of Mind.
+        </h1>
+        <p class="hero-sub">
+            Enterprise-grade managed IT services for businesses that can't afford downtime. Proactive infrastructure management, cyber security, and 24/7 support from Hull.
+        </p>
+        <div class="hero-actions">
+            <a href="#services" class="btn-primary"><i class="fas fa-arrow-right"></i> Explore Services</a>
+            <a href="#remote-support" class="btn-outline"><i class="fas fa-headset"></i> Remote Support</a>
+        </div>
+    </div>
+    <div class="hero-stats">
+        <div class="stat-item">
+            <div class="stat-num">24/7</div>
+            <div class="stat-label">Monitoring</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">&lt;1hr</div>
+            <div class="stat-label">Response Time</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">99.9%</div>
+            <div class="stat-label">Uptime SLA</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">ISO</div>
+            <div class="stat-label">Cyber Essentials</div>
+        </div>
     </div>
 </section>
 
-<section id="about" class="split-section">
-    <div class="split-text">
-        <p style="color: var(--jsl-teal); font-weight: bold; text-transform: uppercase;">About Us</p>
-        <h2 style="font-size: 2.5rem;">Meet the Team Behind <span>Your IT Strategy</span></h2>
-        <p>At Jackson Systems Limited, we don't just fix computers; we engineer business continuity. Led by Chris Jackson, our team of dedicated IT specialists provides top-tier Managed Services and Support across all industries.</p>
-        <p>From startups to large-scale corporations, we provide the technical roadmap and 24/7 vigilance required to stay ahead in a digital-first world.</p>
-        <a href="#contact" class="btn-teal">WORK WITH US</a>
-    </div>
-    <div class="split-image"></div>
-</section>
-
-<section id="services" class="service-showcase">
-    <div class="showcase-item">
-        <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">01</span>
-        <h2>Cyber Security</h2>
-        <p>Comprehensive security solutions to protect your business data and its people. We provide real-time monitoring and advanced threat protection.</p>
-    </div>
-    <div class="showcase-image" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000');"></div>
-
-    <div class="showcase-image" style="background-image: url('https://images.unsplash.com/photo-1506220926022-cc5c12acdb35?auto=format&fit=crop&q=80&w=1000');"></div>
-    <div class="showcase-item">
-        <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">02</span>
-        <h2>Cloud Solutions</h2>
-        <p>Scalable and efficient cloud services tailored to your needs. Enable your team to work securely from anywhere.</p>
-    </div>
-
-    <div class="showcase-item">
-        <span style="color: var(--jsl-teal); font-size: 0.9rem; font-weight: bold;">03</span>
-        <h2>Managed IT Services</h2>
-        <p>Proactive management and support for your IT infrastructure. Big or Small, we ensure your systems run at peak performance.</p>
-    </div>
-    <div class="showcase-image" style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000');"></div>
-</section>
-
-<section id="remote-support" class="support-container">
-    <h2 style="font-size: 2.5rem;">Instant Remote Assistance</h2>
-    <p style="color: var(--muted-text);">Enter the code provided by your technician below to join the session.</p>
-    <div class="iframe-wrapper">
-        <iframe src="https://jacksontech.screenconnect.com/Guest" title="Remote Support Session"></iframe>
+<!-- ============================================================
+     ABOUT
+============================================================ -->
+<section id="about">
+    <div class="about-grid">
+        <div class="about-image-block">
+            <img
+                src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80&w=900"
+                alt="IT team at work"
+            >
+        </div>
+        <div>
+            <p class="section-tag">About Us</p>
+            <h2 class="section-title">Enterprise IT,<br>Local Understanding</h2>
+            <p class="section-sub">
+                Jackson Systems Limited is a Hull-based managed IT provider. Our name is a nod to the infrastructure giants who built the modern internet — we bring that same engineering mindset to businesses of every size.
+            </p>
+            <ul class="about-checklist">
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Led by experienced engineers with hands-on infrastructure expertise</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Microsoft 365, Intune & Entra ID specialists for modern workplace deployments</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Cyber Essentials compliance guidance and certification support</span>
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Proactive monitoring — we fix problems before you notice them</span>
+                </li>
+            </ul>
+        </div>
     </div>
 </section>
 
-<section id="contact" class="contact-footer">
-    <div class="contact-info">
-        <h3>Get In Touch</h3>
-        <p><i class="fas fa-phone"></i> <strong>Tel:</strong> 01482 935101</p>
-        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> support@jacksontech.co.uk</p>
-        <p><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> Office 15 - Bespoke Business Center, Zeals Garth, HULL.</p>
+<!-- ============================================================
+     SERVICES
+============================================================ -->
+<section id="services">
+    <div class="services-header">
+        <div>
+            <p class="section-tag">What We Do</p>
+            <h2 class="section-title">Core Service Lines</h2>
+        </div>
+        <p class="section-sub" style="max-width:380px; margin:0;">
+            Comprehensive managed services built around reliability, security, and scale.
+        </p>
     </div>
-    <div style="display: flex; align-items: center; justify-content: center; opacity: 0.2;">
-         <i class="fas fa-network-wired" style="font-size: 10rem; color: #fff;"></i>
+    <div class="services-grid">
+        <div class="service-card">
+            <span class="service-num">01</span>
+            <div class="service-icon"><i class="fas fa-shield-halved"></i></div>
+            <h3>Cyber Security</h3>
+            <p>Advanced threat protection, endpoint security, and real-time monitoring. From Cyber Essentials certification to full SOC support.</p>
+        </div>
+        <div class="service-card">
+            <span class="service-num">02</span>
+            <div class="service-icon"><i class="fas fa-cloud"></i></div>
+            <h3>Cloud Solutions</h3>
+            <p>Microsoft 365 deployment, migration, and ongoing management. Azure infrastructure, hybrid environments, and identity management via Entra ID.</p>
+        </div>
+        <div class="service-card">
+            <span class="service-num">03</span>
+            <div class="service-icon"><i class="fas fa-network-wired"></i></div>
+            <h3>Network Infrastructure</h3>
+            <p>LAN/WAN design, SD-WAN, and structured cabling. We engineer networks that perform under real-world load, supporting equipment from the vendors your business already trusts.</p>
+            <div class="vendor-tags">
+                <span>Cisco</span>
+                <span>Aruba</span>
+                <span>ZyXEL</span>
+                <span>FortiGate</span>
+                <span>Ubiquiti</span>
+                <span>Netgear</span>
+            </div>
+        </div>
+        <div class="service-card">
+            <span class="service-num">04</span>
+            <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
+            <h3>Managed IT Support</h3>
+            <p>Proactive helpdesk and on-site support with defined SLAs. Endpoint management via Intune, patch automation, and asset tracking.</p>
+        </div>
+        <div class="service-card">
+            <span class="service-num">05</span>
+            <div class="service-icon"><i class="fas fa-file-shield"></i></div>
+            <h3>Compliance & Governance</h3>
+            <p>Cyber Essentials Plus and GDPR alignment. We translate complex frameworks into practical, auditable policies your business can stand behind.</p>
+        </div>
+        <div class="service-card">
+            <span class="service-num">06</span>
+            <div class="service-icon"><i class="fas fa-headset"></i></div>
+            <h3>Remote & On-Site Support</h3>
+            <p>Fast remote sessions via ScreenConnect and on-site visits across Hull and East Yorkshire. Real engineers, real turnaround times.</p>
+        </div>
     </div>
 </section>
 
+<!-- ============================================================
+     MANAGED IT / YOUR IT DEPARTMENT
+============================================================ -->
+<section id="managed-it">
+    <div class="mit-inner">
+        <div class="mit-text">
+            <p class="section-tag">Managed IT Services</p>
+            <h2 class="section-title">Your IT Department,<br>Without the Overhead</h2>
+            <p class="section-sub">
+                Most businesses need great IT support — but not necessarily a full in-house team. That's where we come in. Jackson Systems acts as your dedicated IT department: handling the day-to-day, responding when things go wrong, and planning ahead so they don't.
+            </p>
+            <p class="section-sub" style="margin-top: 16px;">
+                One monthly cost. No recruitment headaches. No gaps in cover. Just a team of engineers who know your systems and pick up the phone when you call.
+            </p>
+            <div class="mit-pills">
+                <span><i class="fas fa-circle-check"></i> Single point of contact</span>
+                <span><i class="fas fa-circle-check"></i> Predictable monthly billing</span>
+                <span><i class="fas fa-circle-check"></i> Scales with your business</span>
+                <span><i class="fas fa-circle-check"></i> No long-term lock-in</span>
+                <span><i class="fas fa-circle-check"></i> On-site when you need us</span>
+                <span><i class="fas fa-circle-check"></i> Proactive, not just reactive</span>
+            </div>
+            <a href="#contact" class="btn-primary" style="margin-top: 36px; display: inline-flex;">
+                <i class="fas fa-arrow-right"></i> Talk to Us
+            </a>
+        </div>
+        <div class="mit-visual">
+            <div class="mit-card">
+                <div class="mit-card-top">
+                    <i class="fas fa-building"></i>
+                    <span>Your Business</span>
+                </div>
+                <div class="mit-flow-line"></div>
+                <div class="mit-card-mid">
+                    <div class="mit-jsl-badge">
+                        <div class="bridge-icon" style="height:22px;">
+                            <span style="height:8px;"></span>
+                            <span style="height:14px;"></span>
+                            <span style="height:19px;"></span>
+                            <span style="height:22px; background:var(--jsl-blue-lt);"></span>
+                            <span style="height:19px;"></span>
+                            <span style="height:14px;"></span>
+                            <span style="height:8px;"></span>
+                        </div>
+                        <span>Jackson Systems</span>
+                    </div>
+                    <p>Your IT Department</p>
+                </div>
+                <div class="mit-flow-grid">
+                    <div class="mit-flow-item"><i class="fas fa-headset"></i><span>Helpdesk</span></div>
+                    <div class="mit-flow-item"><i class="fas fa-shield-halved"></i><span>Security</span></div>
+                    <div class="mit-flow-item"><i class="fas fa-cloud"></i><span>Cloud</span></div>
+                    <div class="mit-flow-item"><i class="fas fa-network-wired"></i><span>Network</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     REMOTE SUPPORT
+============================================================ -->
+<section id="remote-support">
+    <div class="remote-inner">
+        <div class="remote-header">
+            <p class="section-tag">Remote & On-Site Support</p>
+            <h2 class="section-title">We Can Be On Your<br>Screen in Minutes</h2>
+            <p class="section-sub">If something's not working, don't wait. Your technician can connect directly to your machine remotely — just click the button below and follow the prompts. We'll take it from there.</p>
+        </div>
+        <div class="monitor-wrap">
+            <div class="monitor">
+                <div class="monitor-screen">
+                    <div class="sc-titlebar">
+                        <div class="sc-dot"></div>
+                        <div class="sc-dot"></div>
+                        <div class="sc-dot"></div>
+                        <span class="sc-url">Remote Support Portal — Jackson Systems</span>
+                    </div>
+                    <iframe src="https://jacksontech.screenconnect.com/Guest" title="Remote Support"></iframe>
+                </div>
+                <div class="monitor-neck"></div>
+                <div class="monitor-base"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     COLOCATION
+============================================================ -->
+<section id="colocation">
+    <div class="colo-inner">
+        <div class="colo-visual">
+            <div class="colo-rack">
+                <div class="rack-unit ru-active"><span class="ru-led"></span><span>Primary Server</span><span class="ru-status">ONLINE</span></div>
+                <div class="rack-unit ru-active"><span class="ru-led"></span><span>Backup Server</span><span class="ru-status">ONLINE</span></div>
+                <div class="rack-unit"><span class="ru-led ru-amber"></span><span>Storage Array</span><span class="ru-status ru-s-amber">SYNC</span></div>
+                <div class="rack-unit ru-active"><span class="ru-led"></span><span>Core Switch</span><span class="ru-status">ONLINE</span></div>
+                <div class="rack-unit ru-active"><span class="ru-led"></span><span>Firewall</span><span class="ru-status">ONLINE</span></div>
+                <div class="rack-unit ru-dark"><span class="ru-led ru-off"></span><span>Reserved</span><span class="ru-status ru-s-off">VACANT</span></div>
+                <div class="rack-unit ru-dark"><span class="ru-led ru-off"></span><span>Reserved</span><span class="ru-status ru-s-off">VACANT</span></div>
+                <div class="rack-footer">
+                    <span><i class="fas fa-bolt"></i> Dual PSU</span>
+                    <span><i class="fas fa-thermometer-half"></i> 21°C</span>
+                    <span><i class="fas fa-wifi"></i> Direct Fibre</span>
+                </div>
+            </div>
+        </div>
+        <div class="colo-text">
+            <p class="section-tag">Colocation & Disaster Recovery</p>
+            <h2 class="section-title">Your Infrastructure,<br>Hosted in Hull</h2>
+            <p class="section-sub">
+                Jackson Systems operates a bespoke colocation facility in Kingston upon Hull, with direct upstream provider links to the internet backbone — delivering exceptional throughput and consistently low latency for hosted workloads.
+            </p>
+            <p class="section-sub" style="margin-top:16px;">
+                Whether you need a resilient secondary site, a fully managed hosting environment, or a complete disaster recovery solution, our facility can replicate your entire systems estate — servers, storage, networking — and keep it ready to take over at a moment's notice.
+            </p>
+            <div class="colo-features">
+                <div class="colo-feat">
+                    <i class="fas fa-plug"></i>
+                    <div>
+                        <strong>Direct Provider Uplinks</strong>
+                        <span>Carrier-grade connectivity with redundant upstream paths and minimal latency to the internet backbone.</span>
+                    </div>
+                </div>
+                <div class="colo-feat">
+                    <i class="fas fa-clone"></i>
+                    <div>
+                        <strong>Full Estate Replication</strong>
+                        <span>We can mirror your servers, storage and network configuration — so failover is seamless, not scrambled.</span>
+                    </div>
+                </div>
+                <div class="colo-feat">
+                    <i class="fas fa-shield-halved"></i>
+                    <div>
+                        <strong>Physically Secure & Monitored</strong>
+                        <span>Access-controlled, monitored around the clock, with environmental controls and dual power feeds.</span>
+                    </div>
+                </div>
+                <div class="colo-feat">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Hull-Based, Engineer-Accessible</strong>
+                        <span>Locally operated means we can physically intervene quickly — no waiting on a remote hands team.</span>
+                    </div>
+                </div>
+            </div>
+            <a href="#contact" class="btn-primary" style="margin-top:36px; display:inline-flex;">
+                <i class="fas fa-arrow-right"></i> Enquire About Colocation
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+============================================================ -->
+<section id="contact">
+    <div class="contact-inner">
+        <p class="section-tag">Contact</p>
+        <h2 class="section-title">Let's Talk</h2>
+        <p class="section-sub">Ready to take control of your IT? Get in touch with the team today.</p>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-card-icon"><i class="fas fa-phone"></i></div>
+                <div class="contact-card-body">
+                    <strong>Telephone</strong>
+                    <a href="tel:01482935101">01482 935101</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+                <div class="contact-card-body">
+                    <strong>Email</strong>
+                    <a href="mailto:support@jacksonsystems.co.uk">support@jacksonsystems.co.uk</a>
+                </div>
+            </div>
+            <div class="contact-card">
+                <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="contact-card-body">
+                    <strong>Office Address</strong>
+                    <p>Office 15, Bespoke Business Centre,<br>Zeals Garth, Kingston upon Hull</p>
+                </div>
+            </div>
+            <div class="contact-card">
+                <div class="contact-card-icon"><i class="fas fa-clock"></i></div>
+                <div class="contact-card-body">
+                    <strong>Support Hours</strong>
+                    <p>Mon–Fri 08:30–17:30<br>Emergency cover 24/7</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
 <footer>
-    <p>&copy; 2026 Jackson Systems Limited. All Rights Reserved.</p>
+    <a href="#" class="brand-mark" style="opacity:0.6;">
+        <div class="bridge-icon">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+        </div>
+        <div class="brand-text">
+            <span class="b1" style="font-size:1rem;">Jackson Systems</span>
+            <span class="b2">Limited</span>
+        </div>
+    </a>
+    <p>&copy; 2026 Jackson Systems Limited. All rights reserved. Registered in England &amp; Wales.</p>
+    <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#contact">Contact</a>
+    </div>
 </footer>
 
 </body>
