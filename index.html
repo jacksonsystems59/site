@@ -136,6 +136,352 @@
         .nav-cta:hover { background: var(--jsl-gold) !important; }
 
         /* ============================================================
+           INTRO OVERLAY — terminal boot sequence
+        ============================================================ */
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: #020c16;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        #intro-overlay.fade-out {
+            opacity: 0;
+            transform: translateY(-30px);
+            pointer-events: none;
+        }
+
+        /* Scanline effect */
+        #intro-overlay::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                rgba(0,0,0,0.08) 3px,
+                rgba(0,0,0,0.08) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .intro-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,180,160,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,180,160,0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .intro-grid-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(13,95,163,0.08) 0%, transparent 70%);
+        }
+
+        /* Terminal window */
+        .intro-terminal {
+            position: relative;
+            z-index: 2;
+            width: min(680px, 90vw);
+            background: #050f1c;
+            border: 1px solid rgba(0,180,160,0.3);
+            border-radius: 8px;
+            box-shadow:
+                0 0 0 1px rgba(0,180,160,0.1),
+                0 40px 80px rgba(0,0,0,0.8),
+                0 0 60px rgba(0,180,160,0.05);
+            overflow: hidden;
+            opacity: 0;
+            animation: termAppear 0.5s ease 0.3s forwards;
+        }
+
+        @keyframes termAppear {
+            from { opacity: 0; transform: scale(0.97) translateY(10px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Terminal title bar */
+        .term-bar {
+            background: #0a1e32;
+            padding: 11px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(0,180,160,0.2);
+        }
+
+        .term-dot {
+            width: 11px; height: 11px;
+            border-radius: 50%;
+        }
+
+        .term-dot:nth-child(1) { background: #ff5f57; }
+        .term-dot:nth-child(2) { background: #febc2e; }
+        .term-dot:nth-child(3) { background: #28c840; }
+
+        .term-title {
+            flex: 1;
+            text-align: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 1px;
+            margin-left: -47px;
+        }
+
+        /* Terminal body */
+        .term-body {
+            padding: 28px 32px 32px;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* Logo block inside terminal */
+        .term-logo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeIn 0.4s ease 0.8s forwards;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0,180,160,0.15);
+        }
+
+        .term-bridge {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 38px;
+            flex-shrink: 0;
+        }
+
+        .term-bridge span {
+            display: block;
+            width: 6px;
+            border-radius: 2px 2px 0 0;
+            background: var(--jsl-teal);
+            opacity: 0;
+            animation: barRise 0.35s ease forwards;
+        }
+
+        .term-bridge span:nth-child(1) { height: 14px; animation-delay: 0.9s; }
+        .term-bridge span:nth-child(2) { height: 23px; animation-delay: 1.0s; }
+        .term-bridge span:nth-child(3) { height: 31px; animation-delay: 1.1s; }
+        .term-bridge span:nth-child(4) { height: 38px; background: var(--jsl-blue-lt); animation-delay: 1.2s; }
+        .term-bridge span:nth-child(5) { height: 31px; animation-delay: 1.3s; }
+        .term-bridge span:nth-child(6) { height: 23px; animation-delay: 1.4s; }
+        .term-bridge span:nth-child(7) { height: 14px; animation-delay: 1.5s; }
+
+        @keyframes barRise {
+            from { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+            to   { opacity: 1; transform: scaleY(1); }
+        }
+
+        .term-brand-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .term-brand-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .term-brand-sub {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--jsl-teal);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Terminal lines */
+        .term-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .term-line {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(0.72rem, 1.8vw, 0.82rem);
+            line-height: 1.6;
+            white-space: pre;
+            display: flex;
+            align-items: baseline;
+            gap: 0;
+        }
+
+        .term-prompt {
+            color: var(--jsl-teal);
+            flex-shrink: 0;
+        }
+
+        .term-cmd  { color: #7dd3fc; }
+        .term-out  { color: rgba(255,255,255,0.5); padding-left: 16px; font-size: 0.75rem; }
+        .term-ok   { color: #4ade80; }
+        .term-dim  { color: rgba(255,255,255,0.2); }
+
+        /* The main typed line */
+        #tw-main {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            color: #fff;
+            font-weight: 600;
+            margin-top: 12px;
+            min-height: 1.6em;
+        }
+
+        #tw-main .tw-label { color: var(--jsl-teal); }
+
+        .tw-cursor {
+            display: inline-block;
+            width: 9px;
+            height: 1em;
+            background: var(--jsl-teal);
+            margin-left: 1px;
+            vertical-align: text-bottom;
+            animation: blink 0.7s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* Skip button */
+        .intro-skip {
+            position: relative;
+            z-index: 2;
+            margin-top: 20px;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.3);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 7px 18px;
+            border-radius: 3px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 0.4s ease 1.8s forwards;
+            transition: all 0.2s;
+        }
+        .intro-skip:hover { border-color: var(--jsl-teal); color: var(--jsl-teal); }
+
+        /* ============================================================
+           COOKIE BANNER
+        ============================================================ */
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 8000;
+            background: #07131f;
+            border-top: 1px solid rgba(0,180,160,0.3);
+            padding: 20px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+            box-shadow: 0 -8px 32px rgba(0,0,0,0.4);
+        }
+
+        #cookie-banner.visible { transform: translateY(0); }
+
+        .cookie-text {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .cookie-text i {
+            font-size: 1.1rem;
+            color: var(--jsl-teal);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .cookie-text p {
+            font-size: 0.82rem;
+            color: var(--jsl-muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .cookie-text p strong { color: #fff; }
+
+        .cookie-text a {
+            color: var(--jsl-teal);
+            text-decoration: none;
+            font-size: 0.78rem;
+        }
+
+        .cookie-text a:hover { text-decoration: underline; }
+
+        .cookie-actions {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .cookie-btn {
+            font-family: 'Barlow', sans-serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 10px 22px;
+            border-radius: 3px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cookie-accept {
+            background: var(--jsl-teal);
+            color: #fff;
+        }
+        .cookie-accept:hover { background: var(--jsl-blue-lt); }
+
+        .cookie-reject {
+            background: transparent;
+            color: var(--jsl-muted);
+            border: 1px solid rgba(255,255,255,0.15) !important;
+        }
+        .cookie-reject:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff; }
+
+        /* ============================================================
            HERO
         ============================================================ */
         .hero {
@@ -146,6 +492,7 @@
             overflow: hidden;
             background: var(--jsl-dark);
         }
+
 
         /* Animated grid / circuit background */
         .hero-bg {
@@ -413,100 +760,122 @@
         }
 
         /* ============================================================
-           SERVICES
+           SERVICES — tabbed showcase
         ============================================================ */
-        #services { background: var(--jsl-dark); }
-
-        .services-header {
-            max-width: 1200px;
-            margin: 0 auto 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 30px;
+        #services {
+            background: var(--jsl-dark);
+            padding-bottom: 0;
         }
 
-        .services-grid {
+        .services-intro {
+            max-width: 1200px;
+            margin: 0 auto 48px;
+        }
+
+        /* Tab bar — Cisco product nav style */
+        .svc-tabs {
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
-            background: var(--jsl-border);
-            border: 1px solid var(--jsl-border);
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            border-bottom: 2px solid var(--jsl-border);
+            scrollbar-width: none;
+        }
+        .svc-tabs::-webkit-scrollbar { display: none; }
+
+        .svc-tab {
+            flex-shrink: 0;
+            padding: 16px 28px;
+            font-family: 'Barlow', sans-serif;
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--jsl-muted);
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
 
-        .service-card {
+        .svc-tab i { font-size: 0.9rem; }
+
+        .svc-tab:hover { color: #fff; background: rgba(255,255,255,0.03); }
+
+        .svc-tab.active {
+            color: #fff;
+            border-bottom-color: var(--jsl-teal);
+            background: rgba(0,180,160,0.05);
+        }
+
+        .svc-tab.active i { color: var(--jsl-teal); }
+
+        /* Panel area */
+        .svc-panels {
+            max-width: 1200px;
+            margin: 0 auto;
             background: var(--jsl-navy);
-            padding: 48px 40px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
+            border: 1px solid var(--jsl-border);
+            border-top: none;
         }
 
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--jsl-blue);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
+        .svc-panel {
+            display: none;
+            grid-template-columns: 1fr 1.3fr;
+            min-height: 480px;
         }
 
-        .service-card:hover { background: var(--jsl-mid); }
-        .service-card:hover::before { transform: scaleX(1); }
+        .svc-panel.active { display: grid; }
 
-        .service-card:hover .service-icon i {
-            color: var(--jsl-gold);
+        /* Left — text info */
+        .svc-panel-info {
+            padding: 56px 48px;
+            border-right: 1px solid var(--jsl-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .service-icon {
-            width: 52px;
-            height: 52px;
+        .svc-panel-num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.15);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .svc-panel-icon {
+            width: 56px;
+            height: 56px;
             background: rgba(13,95,163,0.2);
-            border-radius: 4px;
+            border: 1px solid rgba(13,95,163,0.4);
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 24px;
-            border: 1px solid rgba(13,95,163,0.4);
-            transition: all 0.3s;
         }
 
-        .service-icon i {
-            font-size: 1.4rem;
-            color: var(--jsl-teal);
-            transition: color 0.3s;
-        }
+        .svc-panel-icon i { font-size: 1.5rem; color: var(--jsl-teal); }
 
-        .service-num {
-            position: absolute;
-            top: 20px;
-            right: 24px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.1);
-            letter-spacing: 2px;
-        }
-
-        .service-card h3 {
+        .svc-panel-info h3 {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
             color: #fff;
-            margin-bottom: 14px;
-            letter-spacing: 0.5px;
+            margin-bottom: 16px;
         }
 
-        .service-card p {
+        .svc-panel-info p {
             color: var(--jsl-muted);
-            font-size: 0.9rem;
-            line-height: 1.75;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 12px;
         }
 
         .vendor-tags {
@@ -526,6 +895,162 @@
             border-radius: 3px;
             letter-spacing: 0.5px;
         }
+
+        /* Right — mock dashboard preview */
+        .svc-panel-preview {
+            background: #040e1c;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Fake dashboard elements */
+        .dash-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: #0a1e35;
+            border: 1px solid var(--jsl-border);
+            border-radius: 5px;
+        }
+
+        .dash-topbar-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--jsl-muted);
+        }
+
+        .dash-topbar-title span { color: var(--jsl-teal); }
+
+        .dash-btn {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.62rem;
+            color: #fff;
+            background: var(--jsl-blue);
+            border: none;
+            padding: 5px 14px;
+            border-radius: 3px;
+            letter-spacing: 1px;
+        }
+
+        .dash-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .dash-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+        .dash-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+        .dash-card {
+            background: #0a1e35;
+            border: 1px solid var(--jsl-border);
+            border-radius: 5px;
+            padding: 16px;
+        }
+
+        .dash-card-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--jsl-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .dash-card-val {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .dash-card-val.green { color: var(--jsl-teal); }
+        .dash-card-val.amber { color: var(--jsl-gold); }
+        .dash-card-val.blue  { color: var(--jsl-blue-lt); }
+
+        .dash-card-sub {
+            font-size: 0.72rem;
+            color: var(--jsl-muted);
+            margin-top: 4px;
+        }
+
+        /* Fake bar chart */
+        .dash-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            height: 60px;
+            padding: 0 4px;
+        }
+
+        .dash-bar {
+            flex: 1;
+            border-radius: 2px 2px 0 0;
+            background: var(--jsl-blue);
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .dash-bar:hover { opacity: 1; }
+        .dash-bar.hi { background: var(--jsl-teal); opacity: 0.9; }
+
+        /* Fake status list */
+        .dash-status-list { display: flex; flex-direction: column; gap: 6px; }
+
+        .dash-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--jsl-muted);
+        }
+
+        .dash-status-row .led {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .led-green { background: var(--jsl-teal); box-shadow: 0 0 5px var(--jsl-teal); }
+        .led-amber { background: var(--jsl-gold); box-shadow: 0 0 5px var(--jsl-gold); }
+        .led-blue  { background: var(--jsl-blue-lt); }
+
+        .dash-status-row .row-name { flex: 1; margin-left: 10px; }
+        .dash-badge {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            padding: 2px 8px;
+            border-radius: 2px;
+            letter-spacing: 1px;
+        }
+        .badge-ok     { background: rgba(0,180,160,0.15); color: var(--jsl-teal); }
+        .badge-warn   { background: rgba(240,165,0,0.15); color: var(--jsl-gold); }
+        .badge-active { background: rgba(26,127,212,0.2); color: var(--jsl-blue-lt); }
+
+        /* Slide-in animation when panel activates */
+        @keyframes panelIn {
+            from { opacity: 0; transform: translateX(12px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .svc-panel.active .svc-panel-info,
+        .svc-panel.active .svc-panel-preview {
+            animation: panelIn 0.35s ease forwards;
+        }
+
+        .svc-panel.active .svc-panel-preview { animation-delay: 0.05s; }
+
+        @media (max-width: 900px) {
+            .svc-panel.active { grid-template-columns: 1fr; }
+            .svc-panel-preview { display: none; }
+            .svc-panel-info { border-right: none; padding: 40px 28px; }
+        }
+
 
         /* ============================================================
            MANAGED IT SECTION
@@ -657,7 +1182,7 @@
 
         .mit-flow-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin-top: 16px;
             width: 100%;
@@ -689,9 +1214,154 @@
             letter-spacing: 1px;
         }
 
+        /* Service items list inside managed-it */
+        .mit-services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 32px;
+            border: 1px solid var(--jsl-border);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .mit-svc-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--jsl-navy);
+            border-bottom: 1px solid var(--jsl-border);
+            transition: background 0.2s;
+        }
+
+        .mit-svc-item:last-child { border-bottom: none; }
+        .mit-svc-item:hover { background: var(--jsl-mid); }
+
+        .mit-svc-icon {
+            width: 34px;
+            height: 34px;
+            background: rgba(13,95,163,0.2);
+            border: 1px solid rgba(13,95,163,0.35);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .mit-svc-icon i { color: var(--jsl-teal); font-size: 0.85rem; }
+
+        .mit-svc-item div strong {
+            display: block;
+            color: #fff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .mit-svc-item div span {
+            color: var(--jsl-muted);
+            font-size: 0.8rem;
+            line-height: 1.55;
+        }
+
         @media (max-width: 1024px) {
             .mit-inner { grid-template-columns: 1fr; }
-            .mit-visual { margin-top: 20px; }
+            .mit-visual { order: 2; }
+        }
+
+        /* ============================================================
+           12 PRINCIPLES
+        ============================================================ */
+        #principles {
+            background: var(--jsl-navy);
+            border-top: 1px solid var(--jsl-border);
+            border-bottom: 1px solid var(--jsl-border);
+        }
+
+        .principles-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .principles-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .principles-header .section-tag {
+            justify-content: center;
+        }
+
+        .principles-header .section-tag::before { display: none; }
+
+        .principles-header .section-sub {
+            margin: 0 auto;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--jsl-border);
+            border: 1px solid var(--jsl-border);
+        }
+
+        .principle-card {
+            background: var(--jsl-dark);
+            padding: 28px 24px;
+            position: relative;
+            transition: background 0.25s;
+        }
+
+        .principle-card:hover { background: var(--jsl-mid); }
+
+        .principle-card:hover i { color: var(--jsl-gold); }
+
+        .p-num {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.1);
+            letter-spacing: 2px;
+        }
+
+        .principle-card i {
+            font-size: 1.3rem;
+            color: var(--jsl-teal);
+            margin-bottom: 14px;
+            display: block;
+            transition: color 0.25s;
+        }
+
+        .principle-card h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .principle-card p {
+            color: var(--jsl-muted);
+            font-size: 0.8rem;
+            line-height: 1.65;
+        }
+
+        @media (max-width: 1024px) {
+            .principles-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .principles-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 400px) {
+            .principles-grid { grid-template-columns: 1fr; }
         }
 
         /* ============================================================
@@ -1038,25 +1708,105 @@
         footer .footer-links a:hover { color: var(--jsl-teal); }
 
         /* ============================================================
-           RESPONSIVE
+           RESPONSIVE — mobile first
         ============================================================ */
+
+        /* Tablet */
         @media (max-width: 1024px) {
+            section { padding: 70px 5%; }
+
             .about-grid,
-            .support-inner,
+            .mit-inner,
+            .colo-inner,
             .contact-grid { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: 1fr 1fr; }
-            .hero-stats { position: static; }
-            .stat-item { padding: 24px 30px; }
+
+            .colo-visual { order: 2; }
+            .colo-text   { order: 1; }
+
+            .hero-stats { position: static; flex-wrap: wrap; justify-content: center; }
+            .stat-item  { padding: 20px 28px; }
+
+            .svc-panel.active { grid-template-columns: 1fr; }
+            .svc-panel-preview { display: none; }
+            .svc-panel-info { border-right: none; padding: 36px 28px; }
+
+            .mit-visual { order: 2; }
+            .mit-text   { order: 1; }
         }
 
+        /* Mobile */
         @media (max-width: 640px) {
-            .services-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero-stats { flex-direction: column; }
-            .stat-item { border-right: none; border-bottom: 1px solid var(--jsl-border); }
+            section { padding: 56px 4%; }
+
+            /* Header */
+            header { padding: 14px 4%; }
             nav a:not(.nav-cta) { display: none; }
+            .brand-text .b1 { font-size: 1.1rem; }
+
+            /* Hero */
+            .hero { min-height: auto; padding: 60px 0 0; }
+            .hero-inner { padding: 0 4%; }
+            .hero h1 { font-size: clamp(2rem, 9vw, 2.8rem); }
+            .hero-sub { font-size: 0.95rem; }
+            .hero-actions { flex-direction: column; }
+            .hero-actions a { text-align: center; justify-content: center; }
+            .hero-stats { flex-direction: column; }
+            .stat-item { border-right: none; border-bottom: 1px solid var(--jsl-border); width: 100%; padding: 16px 24px; }
+            .stat-item:last-child { border-bottom: none; }
+
+            /* About */
+            .about-image-block::before,
+            .about-image-block::after { display: none; }
+
+            /* Services tabs */
+            .svc-tabs { gap: 0; }
+            .svc-tab  { padding: 12px 14px; font-size: 0.78rem; gap: 6px; }
+            .svc-tab span { display: none; } /* icon only on very small */
+            .svc-panel-info { padding: 28px 20px; }
+            .svc-panel-info h3 { font-size: 1.6rem; }
+
+            /* 12 principles */
+            .principles-grid { grid-template-columns: 1fr 1fr; }
+
+            /* Managed IT pills */
+            .mit-pills { grid-template-columns: 1fr; }
+
+            /* Managed IT card */
+            .mit-card { max-width: 100%; }
+
+            /* Monitor */
+            .monitor-screen iframe { height: 300px; }
+            .monitor-neck { width: 40px; }
+            .monitor-base { width: 120px; }
+
+            /* Colocation rack */
+            .rack-footer { flex-wrap: wrap; gap: 8px; }
+
+            /* Contact */
+            .contact-card { padding: 28px 20px; }
+
+            /* Cookie banner */
+            #cookie-banner { flex-direction: column; padding: 16px 4%; gap: 14px; }
+            .cookie-actions { width: 100%; justify-content: stretch; }
+            .cookie-btn { flex: 1; }
+
+            /* Footer */
             footer { flex-direction: column; text-align: center; }
+            .footer-links { flex-wrap: wrap; justify-content: center; }
+
+            /* Intro terminal */
+            .intro-terminal { width: 95vw; }
+            .term-body { padding: 20px 18px 24px; }
+            .term-brand-name { font-size: 1.2rem; }
+            #tw-main { font-size: 0.82rem; }
+            .term-line { font-size: 0.7rem; }
         }
+
+        @media (max-width: 400px) {
+            .principles-grid { grid-template-columns: 1fr; }
+            .svc-tab { padding: 10px 10px; font-size: 0.72rem; }
+        }
+
 
         /* ============================================================
            SUBTLE ENTRY ANIMATION
@@ -1095,11 +1845,68 @@
     <nav>
         <a href="#about">About</a>
         <a href="#services">Services</a>
+        <a href="#managed-it">Managed IT</a>
+        <a href="#principles">12 Principles</a>
         <a href="#colocation">Colocation</a>
-        <a href="#remote-support">Remote Support</a>
+        <a href="#remote-support">Support</a>
         <a href="#contact" class="nav-cta">Contact Us</a>
     </nav>
 </header>
+
+<!-- ============================================================
+     COOKIE BANNER
+============================================================ -->
+<div id="cookie-banner" role="region" aria-label="Cookie consent">
+    <div class="cookie-text">
+        <i class="fas fa-cookie-bite"></i>
+        <p>
+            <strong>We use cookies</strong> to ensure you get the best experience on our site. We don't sell your data or use third-party tracking. <a href="#">Privacy Policy</a>
+        </p>
+    </div>
+    <div class="cookie-actions">
+        <button class="cookie-btn cookie-reject" onclick="cookieChoice('reject')">Reject</button>
+        <button class="cookie-btn cookie-accept" onclick="cookieChoice('accept')">Accept All</button>
+    </div>
+</div>
+
+<!-- ============================================================
+     INTRO OVERLAY — terminal boot sequence
+============================================================ -->
+<div id="intro-overlay">
+    <div class="intro-grid-bg"></div>
+
+    <div class="intro-terminal">
+        <div class="term-bar">
+            <div class="term-dot"></div>
+            <div class="term-dot"></div>
+            <div class="term-dot"></div>
+            <span class="term-title">jsl-system — bash</span>
+        </div>
+        <div class="term-body">
+
+            <!-- Logo row — fades in then bridge bars rise -->
+            <div class="term-logo">
+                <div class="term-bridge">
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="term-brand-text">
+                    <span class="term-brand-name">Jackson Systems</span>
+                    <span class="term-brand-sub">Managed IT Services · Hull</span>
+                </div>
+            </div>
+
+            <!-- Static boot lines -->
+            <div class="term-lines" id="term-lines"></div>
+
+            <!-- Main typewriter line -->
+            <div id="tw-main"><span class="tw-cursor"></span></div>
+
+        </div>
+    </div>
+
+    <button class="intro-skip" onclick="dismissIntro()">skip intro ↓</button>
+</div>
 
 <!-- ============================================================
      HERO
@@ -1184,60 +1991,300 @@
      SERVICES
 ============================================================ -->
 <section id="services">
-    <div class="services-header">
-        <div>
-            <p class="section-tag">What We Do</p>
-            <h2 class="section-title">Core Service Lines</h2>
-        </div>
-        <p class="section-sub" style="max-width:380px; margin:0;">
-            Comprehensive managed services built around reliability, security, and scale.
-        </p>
+    <div class="services-intro">
+        <p class="section-tag">What We Do</p>
+        <h2 class="section-title">Core Service Lines</h2>
     </div>
-    <div class="services-grid">
-        <div class="service-card">
-            <span class="service-num">01</span>
-            <div class="service-icon"><i class="fas fa-shield-halved"></i></div>
-            <h3>Cyber Security</h3>
-            <p>Advanced threat protection, endpoint security, and real-time monitoring. From Cyber Essentials certification to full SOC support.</p>
-        </div>
-        <div class="service-card">
-            <span class="service-num">02</span>
-            <div class="service-icon"><i class="fas fa-cloud"></i></div>
-            <h3>Cloud Solutions</h3>
-            <p>Microsoft 365 deployment, migration, and ongoing management. Azure infrastructure, hybrid environments, and identity management via Entra ID.</p>
-        </div>
-        <div class="service-card">
-            <span class="service-num">03</span>
-            <div class="service-icon"><i class="fas fa-network-wired"></i></div>
-            <h3>Network Infrastructure</h3>
-            <p>LAN/WAN design, SD-WAN, and structured cabling. We engineer networks that perform under real-world load, supporting equipment from the vendors your business already trusts.</p>
-            <div class="vendor-tags">
-                <span>Cisco</span>
-                <span>Aruba</span>
-                <span>ZyXEL</span>
-                <span>FortiGate</span>
-                <span>Ubiquiti</span>
-                <span>Netgear</span>
+
+    <!-- Tab bar -->
+    <div class="svc-tabs" role="tablist">
+        <button class="svc-tab active" onclick="switchTab(0)" role="tab">
+            <i class="fas fa-shield-halved"></i> Cyber Security
+        </button>
+        <button class="svc-tab" onclick="switchTab(1)" role="tab">
+            <i class="fas fa-cloud"></i> Cloud Solutions
+        </button>
+        <button class="svc-tab" onclick="switchTab(2)" role="tab">
+            <i class="fas fa-network-wired"></i> Network Infrastructure
+        </button>
+        <button class="svc-tab" onclick="switchTab(3)" role="tab">
+            <i class="fas fa-laptop-code"></i> Managed IT Support
+        </button>
+        <button class="svc-tab" onclick="switchTab(4)" role="tab">
+            <i class="fas fa-file-shield"></i> Compliance
+        </button>
+        <button class="svc-tab" onclick="switchTab(5)" role="tab">
+            <i class="fas fa-headset"></i> Remote & On-Site
+        </button>
+    </div>
+
+    <!-- Panels -->
+    <div class="svc-panels">
+
+        <!-- 01 Cyber Security -->
+        <div class="svc-panel active">
+            <div class="svc-panel-info">
+                <div class="svc-panel-num">SERVICE 01</div>
+                <div class="svc-panel-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3>Cyber Security</h3>
+                <p>Advanced threat protection, endpoint security, and real-time monitoring. We keep your business protected against modern threats — from phishing and ransomware to insider risk and zero-day exploits.</p>
+                <p>From Cyber Essentials certification to full endpoint detection and response, we build security postures that hold up under real-world pressure.</p>
+            </div>
+            <div class="svc-panel-preview">
+                <div class="dash-topbar">
+                    <span class="dash-topbar-title">JSL Security Console — <span>Threat Overview</span></span>
+                    <button class="dash-btn">LIVE</button>
+                </div>
+                <div class="dash-grid cols-3">
+                    <div class="dash-card">
+                        <div class="dash-card-label">Threats Blocked</div>
+                        <div class="dash-card-val green">247</div>
+                        <div class="dash-card-sub">Last 30 days</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">Endpoints Protected</div>
+                        <div class="dash-card-val blue">84</div>
+                        <div class="dash-card-sub">All healthy</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">Critical Alerts</div>
+                        <div class="dash-card-val amber">0</div>
+                        <div class="dash-card-sub">All clear</div>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-label">Threat Activity — 7 Days</div>
+                    <div class="dash-bars">
+                        <div class="dash-bar" style="height:30%"></div>
+                        <div class="dash-bar" style="height:55%"></div>
+                        <div class="dash-bar hi" style="height:80%"></div>
+                        <div class="dash-bar" style="height:40%"></div>
+                        <div class="dash-bar" style="height:25%"></div>
+                        <div class="dash-bar" style="height:60%"></div>
+                        <div class="dash-bar" style="height:15%"></div>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-label">Protection Status</div>
+                    <div class="dash-status-list">
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Endpoint Detection & Response</span><span class="dash-badge badge-ok">ACTIVE</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Email Filtering</span><span class="dash-badge badge-ok">ACTIVE</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Patch Management</span><span class="dash-badge badge-ok">ACTIVE</span></div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="service-card">
-            <span class="service-num">04</span>
-            <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
-            <h3>Managed IT Support</h3>
-            <p>Proactive helpdesk and on-site support with defined SLAs. Endpoint management via Intune, patch automation, and asset tracking.</p>
+
+        <!-- 02 Cloud Solutions -->
+        <div class="svc-panel">
+            <div class="svc-panel-info">
+                <div class="svc-panel-num">SERVICE 02</div>
+                <div class="svc-panel-icon"><i class="fas fa-cloud"></i></div>
+                <h3>Cloud Solutions</h3>
+                <p>Microsoft 365 deployment, migration, and ongoing management. Azure infrastructure, hybrid environments, and identity management via Entra ID and Intune.</p>
+                <p>We handle the full lifecycle — from initial tenant setup and licence management through to ongoing configuration, security hardening, and user support.</p>
+            </div>
+            <div class="svc-panel-preview">
+                <div class="dash-topbar">
+                    <span class="dash-topbar-title">M365 Tenant — <span>Health Dashboard</span></span>
+                    <button class="dash-btn">LIVE</button>
+                </div>
+                <div class="dash-grid cols-2">
+                    <div class="dash-card">
+                        <div class="dash-card-label">Licensed Users</div>
+                        <div class="dash-card-val blue">42</div>
+                        <div class="dash-card-sub">Microsoft 365 Business</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">OneDrive Sync</div>
+                        <div class="dash-card-val green">100%</div>
+                        <div class="dash-card-sub">All users healthy</div>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-label">Service Status</div>
+                    <div class="dash-status-list">
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Exchange Online</span><span class="dash-badge badge-ok">HEALTHY</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">SharePoint Online</span><span class="dash-badge badge-ok">HEALTHY</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Entra ID / MFA</span><span class="dash-badge badge-ok">HEALTHY</span></div>
+                        <div class="dash-status-row"><div class="led led-amber"></div><span class="row-name">Conditional Access Policy</span><span class="dash-badge badge-warn">REVIEW</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="service-card">
-            <span class="service-num">05</span>
-            <div class="service-icon"><i class="fas fa-file-shield"></i></div>
-            <h3>Compliance & Governance</h3>
-            <p>Cyber Essentials Plus and GDPR alignment. We translate complex frameworks into practical, auditable policies your business can stand behind.</p>
+
+        <!-- 03 Network Infrastructure -->
+        <div class="svc-panel">
+            <div class="svc-panel-info">
+                <div class="svc-panel-num">SERVICE 03</div>
+                <div class="svc-panel-icon"><i class="fas fa-network-wired"></i></div>
+                <h3>Network Infrastructure</h3>
+                <p>LAN/WAN design, SD-WAN, and structured cabling. We engineer networks that perform under real-world load, supporting equipment from the vendors your business already trusts.</p>
+                <div class="vendor-tags">
+                    <span>Cisco</span>
+                    <span>Aruba</span>
+                    <span>ZyXEL</span>
+                    <span>FortiGate</span>
+                    <span>Ubiquiti</span>
+                    <span>Netgear</span>
+                    <span>Check Point</span>
+                    <span>Dell</span>
+                    <span>Nokia</span>
+                </div>
+            </div>
+            <div class="svc-panel-preview">
+                <div class="dash-topbar">
+                    <span class="dash-topbar-title">Network Monitor — <span>Core Infrastructure</span></span>
+                    <button class="dash-btn">LIVE</button>
+                </div>
+                <div class="dash-grid cols-3">
+                    <div class="dash-card">
+                        <div class="dash-card-label">Uptime</div>
+                        <div class="dash-card-val green">99.9%</div>
+                        <div class="dash-card-sub">30-day avg</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">Latency</div>
+                        <div class="dash-card-val blue">4ms</div>
+                        <div class="dash-card-sub">Core switch</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">Active Devices</div>
+                        <div class="dash-card-val">63</div>
+                        <div class="dash-card-sub">On network</div>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-label">Device Health</div>
+                    <div class="dash-status-list">
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Cisco Core Switch — SW-CORE-01</span><span class="dash-badge badge-ok">ONLINE</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">FortiGate Firewall — FW-01</span><span class="dash-badge badge-ok">ONLINE</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Aruba AP Fleet (12 units)</span><span class="dash-badge badge-ok">ONLINE</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">WAN Uplink — Primary</span><span class="dash-badge badge-ok">ONLINE</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="service-card">
-            <span class="service-num">06</span>
-            <div class="service-icon"><i class="fas fa-headset"></i></div>
-            <h3>Remote & On-Site Support</h3>
-            <p>Fast remote sessions via ScreenConnect and on-site visits across Hull and East Yorkshire. Real engineers, real turnaround times.</p>
+
+        <!-- 04 Managed IT Support -->
+        <div class="svc-panel">
+            <div class="svc-panel-info">
+                <div class="svc-panel-num">SERVICE 04</div>
+                <div class="svc-panel-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3>Managed IT Support</h3>
+                <p>Proactive helpdesk and on-site support with defined SLAs. Endpoint management via Intune, patch automation, and asset tracking — so nothing slips through the cracks.</p>
+                <p>We act as your internal IT team: a single number to call, engineers who know your setup, and a commitment to fast resolution every time.</p>
+            </div>
+            <div class="svc-panel-preview">
+                <div class="dash-topbar">
+                    <span class="dash-topbar-title">Support Desk — <span>Ticket Overview</span></span>
+                    <button class="dash-btn">LIVE</button>
+                </div>
+                <div class="dash-grid cols-3">
+                    <div class="dash-card">
+                        <div class="dash-card-label">Open Tickets</div>
+                        <div class="dash-card-val amber">3</div>
+                        <div class="dash-card-sub">All within SLA</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">Resolved Today</div>
+                        <div class="dash-card-val green">11</div>
+                        <div class="dash-card-sub">Avg 28min</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">SLA Compliance</div>
+                        <div class="dash-card-val blue">100%</div>
+                        <div class="dash-card-sub">This month</div>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-label">Active Tickets</div>
+                    <div class="dash-status-list">
+                        <div class="dash-status-row"><div class="led led-amber"></div><span class="row-name">Printer offline — Accounts dept</span><span class="dash-badge badge-warn">P2</span></div>
+                        <div class="dash-status-row"><div class="led led-blue"></div><span class="row-name">New user setup — Sarah T.</span><span class="dash-badge badge-active">P3</span></div>
+                        <div class="dash-status-row"><div class="led led-blue"></div><span class="row-name">VPN config — remote worker</span><span class="dash-badge badge-active">P3</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- 05 Compliance -->
+        <div class="svc-panel">
+            <div class="svc-panel-info">
+                <div class="svc-panel-num">SERVICE 05</div>
+                <div class="svc-panel-icon"><i class="fas fa-file-shield"></i></div>
+                <h3>Compliance & Governance</h3>
+                <p>Cyber Essentials Plus and GDPR alignment. We translate complex frameworks into practical, auditable policies your business can stand behind — and demonstrate to clients and regulators alike.</p>
+                <p>We handle the evidence gathering, documentation, and technical controls — you get the certification without the headache.</p>
+            </div>
+            <div class="svc-panel-preview">
+                <div class="dash-topbar">
+                    <span class="dash-topbar-title">Compliance — <span>Control Status</span></span>
+                    <button class="dash-btn">REPORT</button>
+                </div>
+                <div class="dash-grid cols-2">
+                    <div class="dash-card">
+                        <div class="dash-card-label">Controls Passing</div>
+                        <div class="dash-card-val green">43/45</div>
+                        <div class="dash-card-sub">Cyber Essentials Plus</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">Last Assessment</div>
+                        <div class="dash-card-val blue">Apr</div>
+                        <div class="dash-card-sub">Next due: Oct 2026</div>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-label">Framework Status</div>
+                    <div class="dash-status-list">
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Cyber Essentials</span><span class="dash-badge badge-ok">CERTIFIED</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">GDPR Data Mapping</span><span class="dash-badge badge-ok">COMPLETE</span></div>
+                        <div class="dash-status-row"><div class="led led-amber"></div><span class="row-name">Password Policy Audit</span><span class="dash-badge badge-warn">IN PROGRESS</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 06 Remote & On-Site -->
+        <div class="svc-panel">
+            <div class="svc-panel-info">
+                <div class="svc-panel-num">SERVICE 06</div>
+                <div class="svc-panel-icon"><i class="fas fa-headset"></i></div>
+                <h3>Remote & On-Site Support</h3>
+                <p>Need help now? We can connect directly to your machine and resolve most issues remotely within minutes. For anything that needs hands-on attention, we cover Hull and East Yorkshire with fast on-site response.</p>
+                <p>Real engineers. Real turnaround times. Head to the Remote Support section below to start a session.</p>
+                <a href="#remote-support" class="btn-primary" style="margin-top:24px; font-size:0.82rem; padding:12px 24px;">
+                    <i class="fas fa-headset"></i> Start Remote Session
+                </a>
+            </div>
+            <div class="svc-panel-preview">
+                <div class="dash-topbar">
+                    <span class="dash-topbar-title">Support — <span>Engineer Status</span></span>
+                    <button class="dash-btn">LIVE</button>
+                </div>
+                <div class="dash-grid cols-2">
+                    <div class="dash-card">
+                        <div class="dash-card-label">Active Sessions</div>
+                        <div class="dash-card-val green">2</div>
+                        <div class="dash-card-sub">Remote support</div>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-label">Response Time</div>
+                        <div class="dash-card-val blue">&lt;1hr</div>
+                        <div class="dash-card-sub">Avg this week</div>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-label">Coverage</div>
+                    <div class="dash-status-list">
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">Remote support (all clients)</span><span class="dash-badge badge-ok">AVAILABLE</span></div>
+                        <div class="dash-status-row"><div class="led led-green"></div><span class="row-name">On-site — Hull & East Yorks</span><span class="dash-badge badge-ok">AVAILABLE</span></div>
+                        <div class="dash-status-row"><div class="led led-blue"></div><span class="row-name">Emergency out-of-hours</span><span class="dash-badge badge-active">24/7</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
@@ -1255,7 +2302,36 @@
             <p class="section-sub" style="margin-top: 16px;">
                 One monthly cost. No recruitment headaches. No gaps in cover. Just a team of engineers who know your systems and pick up the phone when you call.
             </p>
-            <div class="mit-pills">
+
+            <!-- What's included -->
+            <div class="mit-services-list">
+                <div class="mit-svc-item">
+                    <div class="mit-svc-icon"><i class="fas fa-headset"></i></div>
+                    <div><strong>IT Helpdesk</strong><span>Your outsourced first line. We handle the calls, tickets and fixes so your team stays focused.</span></div>
+                </div>
+                <div class="mit-svc-item">
+                    <div class="mit-svc-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div><strong>IT Support</strong><span>Remote and on-site support for everything from broken printers to full infrastructure issues.</span></div>
+                </div>
+                <div class="mit-svc-item">
+                    <div class="mit-svc-icon"><i class="fas fa-wifi"></i></div>
+                    <div><strong>Managed Wi-Fi</strong><span>Enterprise wireless designed, deployed and monitored — coverage that works everywhere, every time.</span></div>
+                </div>
+                <div class="mit-svc-item">
+                    <div class="mit-svc-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div><strong>Managed VoIP</strong><span>Modern business telephony over your existing internet connection. Flexible, scalable, cost-effective.</span></div>
+                </div>
+                <div class="mit-svc-item">
+                    <div class="mit-svc-icon"><i class="fas fa-network-wired"></i></div>
+                    <div><strong>Managed Networks</strong><span>Ongoing monitoring, management and optimisation of your entire network estate.</span></div>
+                </div>
+                <div class="mit-svc-item">
+                    <div class="mit-svc-icon"><i class="fas fa-diagram-project"></i></div>
+                    <div><strong>Network Projects</strong><span>New offices, upgrades, migrations and full infrastructure rollouts — delivered on time, properly documented.</span></div>
+                </div>
+            </div>
+
+            <div class="mit-pills" style="margin-top:28px;">
                 <span><i class="fas fa-circle-check"></i> Single point of contact</span>
                 <span><i class="fas fa-circle-check"></i> Predictable monthly billing</span>
                 <span><i class="fas fa-circle-check"></i> Scales with your business</span>
@@ -1292,10 +2368,106 @@
                 <div class="mit-flow-grid">
                     <div class="mit-flow-item"><i class="fas fa-headset"></i><span>Helpdesk</span></div>
                     <div class="mit-flow-item"><i class="fas fa-shield-halved"></i><span>Security</span></div>
+                    <div class="mit-flow-item"><i class="fas fa-wifi"></i><span>Wi-Fi</span></div>
+                    <div class="mit-flow-item"><i class="fas fa-phone-volume"></i><span>VoIP</span></div>
                     <div class="mit-flow-item"><i class="fas fa-cloud"></i><span>Cloud</span></div>
                     <div class="mit-flow-item"><i class="fas fa-network-wired"></i><span>Network</span></div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     12 PRINCIPLES
+============================================================ -->
+<section id="principles">
+    <div class="principles-inner">
+        <div class="principles-header">
+            <p class="section-tag">Our Framework</p>
+            <h2 class="section-title">The 12 Principles of<br>Good IT Health</h2>
+            <p class="section-sub">
+                Every business we support is assessed against our 12 Principles framework — a practical checklist that keeps your systems secure, compliant, and running at their best. Ongoing, not just at onboarding.
+            </p>
+        </div>
+        <div class="principles-grid">
+            <div class="principle-card">
+                <span class="p-num">01</span>
+                <i class="fas fa-shield-halved"></i>
+                <h4>Endpoint Protection</h4>
+                <p>Every device covered by active, managed security software — no gaps.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">02</span>
+                <i class="fas fa-rotate"></i>
+                <h4>Patch & Update Management</h4>
+                <p>OS and application patches applied promptly and systematically.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">03</span>
+                <i class="fas fa-lock"></i>
+                <h4>Access Control</h4>
+                <p>Least-privilege accounts, MFA enforced, and regular access reviews.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">04</span>
+                <i class="fas fa-database"></i>
+                <h4>Backup & Recovery</h4>
+                <p>Tested, automated backups with documented recovery procedures.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">05</span>
+                <i class="fas fa-fire-flame-curved"></i>
+                <h4>Firewall & Perimeter</h4>
+                <p>Properly configured firewalls with reviewed rules and no legacy exceptions.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">06</span>
+                <i class="fas fa-envelope-circle-check"></i>
+                <h4>Email Security</h4>
+                <p>DMARC, DKIM, SPF configured. Anti-phishing filtering active.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">07</span>
+                <i class="fas fa-network-wired"></i>
+                <h4>Network Segmentation</h4>
+                <p>Guest, corporate and IoT traffic separated — lateral movement contained.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">08</span>
+                <i class="fas fa-magnifying-glass-chart"></i>
+                <h4>Monitoring & Alerting</h4>
+                <p>Proactive monitoring across infrastructure with meaningful alerts, not noise.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">09</span>
+                <i class="fas fa-file-shield"></i>
+                <h4>Compliance Alignment</h4>
+                <p>Controls mapped to Cyber Essentials and GDPR requirements, kept current.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">10</span>
+                <i class="fas fa-triangle-exclamation"></i>
+                <h4>Incident Response</h4>
+                <p>Documented plan, tested contacts, and clear escalation paths in place.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">11</span>
+                <i class="fas fa-graduation-cap"></i>
+                <h4>User Awareness</h4>
+                <p>Staff trained to recognise phishing and social engineering attempts.</p>
+            </div>
+            <div class="principle-card">
+                <span class="p-num">12</span>
+                <i class="fas fa-chart-line"></i>
+                <h4>Continuous Improvement</h4>
+                <p>Regular reviews, documented changes, and a roadmap that keeps pace with your business.</p>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:48px;">
+            <a href="#contact" class="btn-primary" style="display:inline-flex;">
+                <i class="fas fa-clipboard-check"></i> Request a Principles Assessment
+            </a>
         </div>
     </div>
 </section>
@@ -1458,5 +2630,117 @@
     </div>
 </footer>
 
+<script>
+    // ── Cookie banner ────────────────────────────────────────────
+    const cookieBanner = document.getElementById('cookie-banner');
+
+    function cookieChoice(choice) {
+        localStorage.setItem('jsl-cookies', choice);
+        cookieBanner.style.transition = 'transform 0.4s ease';
+        cookieBanner.style.transform  = 'translateY(100%)';
+    }
+
+    // Show after intro dismisses (or immediately if already decided)
+    function maybeShowCookies() {
+        if (!localStorage.getItem('jsl-cookies')) {
+            setTimeout(() => cookieBanner.classList.add('visible'), 800);
+        }
+    }
+
+    // ── Intro terminal ────────────────────────────────────────────
+    const overlay   = document.getElementById('intro-overlay');
+    const linesEl   = document.getElementById('term-lines');
+    const twMain    = document.getElementById('tw-main');
+
+    // Boot lines: [delay ms after prev, prompt?, text, class]
+    const bootLines = [
+        [400,  true,  'jsl-init --boot',           'term-cmd'],
+        [300,  false, 'Loading system modules...', 'term-out'],
+        [500,  false, '✓ Network stack online',    'term-ok'],
+        [220,  false, '✓ Security layer active',   'term-ok'],
+        [220,  false, '✓ Cloud services connected','term-ok'],
+        [180,  false, '✓ Support desk ready',      'term-ok'],
+        [350,  true,  'jsl-discover',               'term-cmd'],
+    ];
+
+    // The final typed phrase — split into label + text
+    const twLabel   = 'DISCOVER > ';
+    const twPhrase  = 'Jackson Systems';
+
+    let lineIndex = 0;
+    let dismissed = false;
+
+    function dismissIntro() {
+        if (dismissed) return;
+        dismissed = true;
+        overlay.classList.add('fade-out');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            maybeShowCookies();
+        }, 900);
+    }
+
+    function addLine(prompt, text, cls) {
+        const div = document.createElement('div');
+        div.className = 'term-line';
+        if (prompt) {
+            div.innerHTML = `<span class="term-prompt">jsl@systems:~$ </span><span class="${cls}">${text}</span>`;
+        } else {
+            div.innerHTML = `<span class="${cls}">${text}</span>`;
+        }
+        linesEl.appendChild(div);
+    }
+
+    function runBootLines() {
+        if (lineIndex >= bootLines.length) {
+            // All boot lines done — start typing main phrase
+            typeMain();
+            return;
+        }
+        const [delay, prompt, text, cls] = bootLines[lineIndex++];
+        setTimeout(() => {
+            addLine(prompt, text, cls);
+            runBootLines();
+        }, delay);
+    }
+
+    function typeMain() {
+        // Show the prompt label first, then type the phrase
+        let i = 0;
+        const fullLabel = twLabel;
+
+        function tick() {
+            if (i <= twPhrase.length) {
+                twMain.innerHTML =
+                    `<span class="term-prompt">jsl@systems:~$ </span>` +
+                    `<span class="tw-label">${fullLabel}</span>` +
+                    `<span style="color:#fff;font-weight:600;">${twPhrase.slice(0,i)}</span>` +
+                    `<span class="tw-cursor"></span>`;
+                i++;
+                const delay = i === twPhrase.length + 1
+                    ? 2200   // pause at end before dismiss
+                    : Math.random() * 70 + 50;
+                setTimeout(i <= twPhrase.length ? tick : dismissIntro, delay);
+            }
+        }
+
+        setTimeout(tick, 300);
+    }
+
+    // Lock scroll, start boot sequence after logo has faded in
+    document.body.style.overflow = 'hidden';
+    setTimeout(runBootLines, 1600);
+
+    // ── Tab switching ─────────────────────────────────────────────
+    function switchTab(index) {
+        document.querySelectorAll('.svc-tab').forEach((t, i) => {
+            t.classList.toggle('active', i === index);
+        });
+        document.querySelectorAll('.svc-panel').forEach((p, i) => {
+            p.classList.toggle('active', i === index);
+        });
+    }
+</script>
 </body>
 </html>
