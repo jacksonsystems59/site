@@ -489,10 +489,10 @@
             min-height: 88vh;
             display: flex;
             align-items: center;
+            justify-content: center;
             overflow: hidden;
             background: var(--jsl-dark);
         }
-
 
         /* Animated grid / circuit background */
         .hero-bg {
@@ -510,22 +510,31 @@
             100% { background-position: 48px 48px; }
         }
 
+        /* Mouse-following parallax glow — moved by JS */
+        .hero-glow {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            transition: background-position 0.1s ease-out;
+        }
+
         /* Radial glow */
         .hero-bg::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse 70% 60% at 60% 50%, rgba(0,180,160,0.08) 0%, transparent 70%),
-                        radial-gradient(ellipse 50% 40% at 20% 70%, rgba(13,95,163,0.15) 0%, transparent 60%),
-                        linear-gradient(to bottom, transparent 60%, var(--jsl-dark) 100%);
+            background: linear-gradient(to bottom, transparent 60%, var(--jsl-dark) 100%);
         }
 
         .hero-inner {
             position: relative;
             z-index: 2;
             padding: 0 6%;
-            max-width: 1200px;
+            max-width: 900px;
             width: 100%;
+            text-align: center;
+            margin: 0 auto;
         }
 
         .hero-eyebrow {
@@ -537,12 +546,14 @@
             margin-bottom: 24px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
         }
-        .hero-eyebrow::before {
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
             content: '';
             display: block;
-            width: 40px;
+            width: 30px;
             height: 2px;
             background: var(--jsl-teal);
         }
@@ -566,11 +577,11 @@
             font-size: 1.15rem;
             color: var(--jsl-muted);
             max-width: 580px;
-            margin-bottom: 48px;
+            margin: 0 auto 48px;
             line-height: 1.75;
         }
 
-        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
         .btn-primary {
             display: inline-flex;
@@ -772,7 +783,7 @@
             margin: 0 auto 48px;
         }
 
-        /* Tab bar — Cisco product nav style */
+        /* Tab bar — desktop only */
         .svc-tabs {
             max-width: 1200px;
             margin: 0 auto;
@@ -786,10 +797,10 @@
 
         .svc-tab {
             flex-shrink: 0;
-            padding: 16px 28px;
+            padding: 16px 22px;
             font-family: 'Barlow', sans-serif;
             font-weight: 600;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: var(--jsl-muted);
             background: none;
             border: none;
@@ -798,21 +809,14 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.2s;
             white-space: nowrap;
         }
 
         .svc-tab i { font-size: 0.9rem; }
-
         .svc-tab:hover { color: #fff; background: rgba(255,255,255,0.03); }
-
-        .svc-tab.active {
-            color: #fff;
-            border-bottom-color: var(--jsl-teal);
-            background: rgba(0,180,160,0.05);
-        }
-
+        .svc-tab.active { color: #fff; border-bottom-color: var(--jsl-teal); background: rgba(0,180,160,0.05); }
         .svc-tab.active i { color: var(--jsl-teal); }
 
         /* Panel area */
@@ -831,6 +835,76 @@
         }
 
         .svc-panel.active { display: grid; }
+
+        /* ── ACCORDION — mobile only ── */
+        .svc-accordion {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            border: 1px solid var(--jsl-border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .acc-item { border-bottom: 1px solid var(--jsl-border); }
+        .acc-item:last-child { border-bottom: none; }
+
+        .acc-header {
+            width: 100%;
+            background: var(--jsl-navy);
+            border: none;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s;
+        }
+
+        .acc-header:hover { background: var(--jsl-mid); }
+        .acc-header.open  { background: var(--jsl-mid); border-bottom: 1px solid var(--jsl-border); }
+
+        .acc-header i.acc-icon { color: var(--jsl-teal); font-size: 1rem; flex-shrink: 0; }
+
+        .acc-header span {
+            flex: 1;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .acc-chevron {
+            color: var(--jsl-muted);
+            font-size: 0.75rem;
+            transition: transform 0.3s;
+        }
+
+        .acc-header.open .acc-chevron { transform: rotate(180deg); color: var(--jsl-teal); }
+
+        .acc-body {
+            display: none;
+            padding: 24px 20px;
+            background: #050f1c;
+        }
+
+        .acc-body.open { display: block; }
+
+        .acc-body p {
+            color: var(--jsl-muted);
+            font-size: 0.9rem;
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+
+        .acc-body p:last-child { margin-bottom: 0; }
+
+        @media (max-width: 720px) {
+            .svc-tabs, .svc-panels { display: none; }
+            .svc-accordion { display: block; }
+        }
 
         /* Left — text info */
         .svc-panel-info {
@@ -1913,6 +1987,7 @@
 ============================================================ -->
 <section class="hero">
     <div class="hero-bg"></div>
+    <div class="hero-glow" id="hero-glow"></div>
     <div class="hero-inner">
         <p class="hero-eyebrow">Jackson Systems Limited</p>
         <h1>
@@ -1942,8 +2017,8 @@
             <div class="stat-label">Uptime SLA</div>
         </div>
         <div class="stat-item">
-            <div class="stat-num">ISO</div>
-            <div class="stat-label">Cyber Essentials</div>
+            <div class="stat-num" id="coffee-count">0</div>
+            <div class="stat-label">☕ Coffees Consumed</div>
         </div>
     </div>
 </section>
@@ -1992,7 +2067,7 @@
 ============================================================ -->
 <section id="services">
     <div class="services-intro">
-        <p class="section-tag">What We Do</p>
+        <p class="section-tag" style="display:flex;">What We Do</p>
         <h2 class="section-title">Core Service Lines</h2>
     </div>
 
@@ -2285,11 +2360,80 @@
             </div>
         </div>
 
-    </div>
-</section>
+    </div><!-- /svc-panels -->
 
-<!-- ============================================================
-     MANAGED IT / YOUR IT DEPARTMENT
+    <!-- Mobile accordion — shown below 720px -->
+    <div class="svc-accordion">
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <i class="fas fa-shield-halved acc-icon"></i>
+                <span>Cyber Security</span>
+                <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="acc-body">
+                <p>Advanced threat protection, endpoint security, and real-time monitoring. From Cyber Essentials certification to full endpoint detection and response.</p>
+            </div>
+        </div>
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <i class="fas fa-cloud acc-icon"></i>
+                <span>Cloud Solutions</span>
+                <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="acc-body">
+                <p>Microsoft 365, Azure, Entra ID and Intune — full lifecycle management from deployment through to ongoing security hardening and user support.</p>
+            </div>
+        </div>
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <i class="fas fa-network-wired acc-icon"></i>
+                <span>Network Infrastructure</span>
+                <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="acc-body">
+                <p>LAN/WAN design, SD-WAN, and structured cabling across all major vendors.</p>
+                <div class="vendor-tags" style="margin-top:12px;">
+                    <span>Cisco</span><span>Aruba</span><span>ZyXEL</span><span>FortiGate</span>
+                    <span>Ubiquiti</span><span>Netgear</span><span>Check Point</span><span>Dell</span><span>Nokia</span>
+                </div>
+            </div>
+        </div>
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <i class="fas fa-laptop-code acc-icon"></i>
+                <span>Managed IT Support</span>
+                <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="acc-body">
+                <p>Proactive helpdesk and on-site support with defined SLAs. Endpoint management via Intune, patch automation, and asset tracking.</p>
+            </div>
+        </div>
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <i class="fas fa-file-shield acc-icon"></i>
+                <span>Compliance & Governance</span>
+                <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="acc-body">
+                <p>Cyber Essentials Plus and GDPR alignment. We handle evidence gathering, documentation and technical controls — you get the certification without the headache.</p>
+            </div>
+        </div>
+        <div class="acc-item">
+            <button class="acc-header" onclick="toggleAcc(this)">
+                <i class="fas fa-headset acc-icon"></i>
+                <span>Remote & On-Site Support</span>
+                <i class="fas fa-chevron-down acc-chevron"></i>
+            </button>
+            <div class="acc-body">
+                <p>Remote sessions and on-site visits across Hull and East Yorkshire. Real engineers, fast turnaround.</p>
+                <a href="#remote-support" class="btn-primary" style="margin-top:16px; font-size:0.82rem; padding:11px 20px; display:inline-flex;">
+                    <i class="fas fa-headset"></i> Start Remote Session
+                </a>
+            </div>
+        </div>
+    </div>
+
+</section>
 ============================================================ -->
 <section id="managed-it">
     <div class="mit-inner">
@@ -2732,14 +2876,84 @@
     document.body.style.overflow = 'hidden';
     setTimeout(runBootLines, 1600);
 
+    // ── Mouse parallax background ────────────────────────────────
+    const heroGlow = document.getElementById('hero-glow');
+    let mouseX = 50, mouseY = 50, currentX = 50, currentY = 50;
+
+    const heroEl = document.querySelector('.hero');
+    if (heroEl) {
+        heroEl.addEventListener('mousemove', (e) => {
+            const r = heroEl.getBoundingClientRect();
+            mouseX = ((e.clientX - r.left) / r.width)  * 100;
+            mouseY = ((e.clientY - r.top)  / r.height) * 100;
+        });
+    }
+
+    function animateGlow() {
+        currentX += (mouseX - currentX) * 0.04;
+        currentY += (mouseY - currentY) * 0.04;
+        if (heroGlow) {
+            heroGlow.style.background =
+                `radial-gradient(ellipse 55% 55% at ${currentX}% ${currentY}%, rgba(0,180,160,0.1) 0%, transparent 65%),
+                 radial-gradient(ellipse 40% 40% at ${100-currentX}% ${100-currentY}%, rgba(13,95,163,0.13) 0%, transparent 60%)`;
+        }
+        requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+
     // ── Tab switching ─────────────────────────────────────────────
     function switchTab(index) {
-        document.querySelectorAll('.svc-tab').forEach((t, i) => {
-            t.classList.toggle('active', i === index);
+        document.querySelectorAll('.svc-tab').forEach((t, i)   => t.classList.toggle('active', i === index));
+        document.querySelectorAll('.svc-panel').forEach((p, i) => p.classList.toggle('active', i === index));
+    }
+
+    // ── Accordion (mobile services) ───────────────────────────────
+    function toggleAcc(btn) {
+        const body   = btn.nextElementSibling;
+        const isOpen = btn.classList.contains('open');
+        document.querySelectorAll('.acc-header').forEach(h => {
+            h.classList.remove('open');
+            h.nextElementSibling.classList.remove('open');
         });
-        document.querySelectorAll('.svc-panel').forEach((p, i) => {
-            p.classList.toggle('active', i === index);
-        });
+        if (!isOpen) {
+            btn.classList.add('open');
+            body.classList.add('open');
+        }
+    }
+
+    // ── Coffee counter ────────────────────────────────────────────
+    // Base count + accrual rate: one coffee every ~45 mins
+    // Epoch: company start date, adjust as you like
+    const coffeeEpoch     = new Date('2020-01-06T08:00:00').getTime();
+    const coffeePerMinute = 1 / 45;
+
+    function updateCoffee() {
+        const mins    = (Date.now() - coffeeEpoch) / 60000;
+        const total   = Math.floor(mins * coffeePerMinute);
+        const el      = document.getElementById('coffee-count');
+        if (el) el.textContent = total.toLocaleString('en-GB');
+    }
+
+    // Count-up animation on first view
+    const coffeeEl = document.getElementById('coffee-count');
+    if (coffeeEl) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                const target  = Math.floor(((Date.now() - coffeeEpoch) / 60000) * coffeePerMinute);
+                const duration = 1800;
+                const start   = performance.now();
+                function step(now) {
+                    const progress = Math.min((now - start) / duration, 1);
+                    const ease     = 1 - Math.pow(1 - progress, 3);
+                    coffeeEl.textContent = Math.floor(ease * target).toLocaleString('en-GB');
+                    if (progress < 1) requestAnimationFrame(step);
+                    else { coffeeEl.textContent = target.toLocaleString('en-GB'); setInterval(updateCoffee, 60000); }
+                }
+                requestAnimationFrame(step);
+                observer.disconnect();
+            }
+        }, { threshold: 0.5 });
+        observer.observe(coffeeEl);
     }
 </script>
 </body>
