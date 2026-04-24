@@ -38,13 +38,20 @@ nav a:hover{color:#fff;background:rgba(255,255,255,.06);}
 #intro-overlay.fade-out{opacity:0;transform:translateY(-30px);pointer-events:none;}
 .intro-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,180,160,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,180,160,.04) 1px,transparent 1px);background-size:40px 40px;}
 .intro-grid-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(13,95,163,.08) 0%,transparent 70%);}
-.intro-terminal{position:relative;z-index:2;width:min(680px,90vw);background:#050f1c;border:1px solid rgba(0,180,160,.3);border-radius:8px;box-shadow:0 0 0 1px rgba(0,180,160,.1),0 40px 80px rgba(0,0,0,.8),0 0 60px rgba(0,180,160,.05);overflow:hidden;opacity:0;animation:termAppear .5s ease .3s forwards;}
+.intro-terminal{position:relative;z-index:2;width:min(680px,90vw);background:#050f1c;border:1px solid rgba(0,180,160,.3);border-radius:8px;box-shadow:0 0 0 1px rgba(0,180,160,.1),0 40px 80px rgba(0,0,0,.8),0 0 60px rgba(0,180,160,.05);overflow:hidden;opacity:0;animation:termAppear .3s ease .05s forwards;}
 @keyframes termAppear{from{opacity:0;transform:scale(.97) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
 .term-bar{background:#0a1e32;padding:11px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(0,180,160,.2);}
 .term-dot{width:11px;height:11px;border-radius:50%;}
 .term-dot:nth-child(1){background:#ff5f57;}.term-dot:nth-child(2){background:#febc2e;}.term-dot:nth-child(3){background:#28c840;}
 .term-title{flex:1;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.3);letter-spacing:1px;margin-left:-47px;}
-.term-body{padding:28px 32px 32px;min-height:320px;display:flex;flex-direction:column;gap:0;}
+.term-ascii{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(0,180,160,0.15);}
+.ascii-bridge{font-family:'IBM Plex Mono',monospace;font-size:clamp(0.5rem,1.3vw,0.72rem);line-height:1.3;white-space:pre;display:block;margin:0 0 10px 0;padding:0;background:none;border:none;overflow:visible;}
+.ac{display:block;color:var(--jsl-teal);}
+.at{display:block;color:var(--jsl-blue-lt);}
+.ascii-brand{display:flex;flex-direction:column;gap:4px;margin-top:10px;}
+.ascii-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.4rem;color:#fff;letter-spacing:2px;display:block;}
+.ascii-sub{font-family:'IBM Plex Mono',monospace;font-size:0.58rem;color:var(--jsl-teal);letter-spacing:3px;text-transform:uppercase;display:block;}
+.term-body{padding:24px 28px 28px;min-height:0;display:flex;flex-direction:column;gap:0;justify-content:flex-start;}
 .term-logo{display:flex;align-items:center;gap:16px;margin-bottom:24px;opacity:0;animation:fadeInEl .4s ease .8s forwards;padding-bottom:20px;border-bottom:1px solid rgba(0,180,160,.15);}
 .term-bridge{display:flex;align-items:center;flex-shrink:0;opacity:0;animation:fadeIn 0.5s ease 0.8s forwards;}
 @keyframes barRise{from{opacity:0;transform:scaleY(0);transform-origin:bottom;}to{opacity:1;transform:scaleY(1);}}
@@ -356,13 +363,14 @@ footer .footer-links a:hover{color:var(--jsl-teal);}
       <span class="term-title">jsl-system — bash</span>
     </div>
     <div class="term-body">
-      <div class="term-logo">
-        <div class="term-bridge"><svg width="56" height="40" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="26" x2="50" y2="26" stroke="#00b4a0" stroke-width="1.8"/><line x1="2" y1="26" x2="2" y2="30" stroke="#00b4a0" stroke-width="1.8"/><line x1="50" y1="26" x2="50" y2="30" stroke="#00b4a0" stroke-width="1.8"/><rect x="17" y="8" width="3.5" height="22" rx="1" fill="#00b4a0"/><rect x="14.5" y="14" width="8.5" height="2" rx="0.5" fill="#00b4a0"/><rect x="31.5" y="8" width="3.5" height="22" rx="1" fill="#00b4a0"/><rect x="29" y="14" width="8.5" height="2" rx="0.5" fill="#00b4a0"/><path d="M2,28 Q10,10 18.75,9 L33.25,9 Q42,10 50,28" stroke="#1a7fd4" stroke-width="1.4" fill="none"/><line x1="8" y1="20.5" x2="8" y2="26" stroke="#1a7fd4" stroke-width="0.9"/><line x1="12" y1="15.5" x2="12" y2="26" stroke="#1a7fd4" stroke-width="0.9"/><line x1="40" y1="15.5" x2="40" y2="26" stroke="#1a7fd4" stroke-width="0.9"/><line x1="44" y1="20.5" x2="44" y2="26" stroke="#1a7fd4" stroke-width="0.9"/></svg></div>
-        <div class="term-brand-text">
-          <span class="term-brand-name">jacksonSystems</span>
-          <span class="term-brand-sub">Managed IT Services · Hull</span>
-        </div>
-      </div>
+      <div class="term-ascii"><pre class="ascii-bridge"><span class="ac">        |          |        </span>
+<span class="ac">        |          |        </span>
+<span class="ac">      __|          |__      </span>
+<span class="ac">   __/  |          |  \__   </span>
+<span class="ac"> _/     |    __    |     \_ </span>
+<span class="ac">/  |    |   /  \   |    |  \</span>
+<span class="at">========|==|====|==|========</span>
+<span class="at">        |  |    |  |        </span></pre><div class="ascii-brand"><span class="ascii-name">jacksonSystems</span><span class="ascii-sub">Managed IT Services &middot; Hull, England</span></div></div>
       <div class="term-lines" id="term-lines"></div>
       <div id="tw-main"><span class="tw-cursor"></span></div>
     </div>
@@ -790,7 +798,7 @@ function addLine(prompt,text,cls){const d=document.createElement('div');d.classN
 function runBootLines(){if(lineIndex>=bootLines.length){typeMain();return;}const[delay,prompt,text,cls]=bootLines[lineIndex++];setTimeout(()=>{addLine(prompt,text,cls);runBootLines();},delay);}
 function typeMain(){let i=0;function tick(){twMain.innerHTML=`<span class="term-prompt">jsl@systems:~$ </span><span class="tw-label">${twLabel}</span><span style="color:#fff;font-weight:600;">${twPhrase.slice(0,i)}</span><span class="tw-cursor"></span>`;i++;const d=i>twPhrase.length?2200:Math.random()*70+50;setTimeout(i>twPhrase.length?dismissIntro:tick,d);}setTimeout(tick,300);}
 document.body.style.overflow='hidden';
-setTimeout(runBootLines,1600);
+setTimeout(runBootLines,800);
 
 // Mouse parallax
 const heroGlow=document.getElementById('hero-glow');
