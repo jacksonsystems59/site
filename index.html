@@ -25,23 +25,36 @@ body{font-family:'Barlow',sans-serif;background:var(--jsl-dark);color:var(--jsl-
 .brand-text .b2{font-family:'IBM Plex Mono',monospace;font-size:.52rem;color:var(--jsl-teal);letter-spacing:2px;text-transform:uppercase;}
 
 /* HEADER */
-header{position:sticky;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:0 4%;background:rgba(6,17,31,.97);border-bottom:1px solid var(--jsl-border);backdrop-filter:blur(10px);height:56px;}
-nav{display:flex;align-items:center;height:100%;}
-nav a, .nav-dropdown-btn{color:var(--jsl-muted);text-decoration:none;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;padding:0 16px;height:100%;display:flex;align-items:center;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;font-family:'Barlow',sans-serif;}
+header{position:sticky;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:0 4%;background:rgba(6,17,31,.97);border-bottom:1px solid var(--jsl-border);backdrop-filter:blur(10px);height:54px;}
+nav{display:flex;align-items:stretch;height:100%;}
+/* All nav items — links, dropdown button, cta — share this base */
+nav a, .nav-dropdown-btn{
+    display:inline-flex;align-items:center;
+    height:100%;padding:0 14px;
+    font-family:'Barlow',sans-serif;font-size:.73rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.7px;
+    color:var(--jsl-muted);text-decoration:none;
+    background:none;border:none;border-bottom:2px solid transparent;
+    cursor:pointer;white-space:nowrap;
+    transition:color .2s,border-color .2s;
+}
 nav a:hover, .nav-dropdown-btn:hover{color:#fff;border-bottom-color:var(--jsl-teal);}
-.nav-dropdown{position:relative;height:100%;display:flex;align-items:center;}
-.nav-dropdown-btn{gap:6px;}
-.nav-dropdown-btn i{font-size:.55rem;transition:transform .2s;}
+/* Dropdown wrapper */
+.nav-dropdown{position:relative;display:flex;align-items:stretch;}
+.nav-dropdown-btn{gap:5px;}
+.nav-dropdown-btn i{font-size:.5rem;margin-top:1px;transition:transform .2s;}
+.nav-dropdown:hover .nav-dropdown-btn{color:#fff;border-bottom-color:var(--jsl-teal);}
 .nav-dropdown:hover .nav-dropdown-btn i{transform:rotate(180deg);}
-.nav-dropdown-btn:hover{color:#fff;border-bottom:2px solid var(--jsl-teal);}
-.dropdown-menu{position:absolute;top:100%;left:0;background:#07131f;border:1px solid var(--jsl-border);border-top:2px solid var(--jsl-teal);min-width:200px;opacity:0;visibility:hidden;transform:translateY(-6px);transition:all .2s;z-index:100;}
+/* Dropdown panel */
+.dropdown-menu{position:absolute;top:calc(100% + 1px);left:0;min-width:190px;background:#07131f;border:1px solid var(--jsl-border);border-top:2px solid var(--jsl-teal);opacity:0;visibility:hidden;transform:translateY(-4px);transition:all .2s;z-index:200;}
 .nav-dropdown:hover .dropdown-menu{opacity:1;visibility:visible;transform:translateY(0);}
-.dropdown-menu a{display:flex;align-items:center;gap:10px;padding:12px 18px;color:var(--jsl-muted);text-decoration:none;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--jsl-border);transition:all .2s;white-space:nowrap;height:auto;}
+.dropdown-menu a{display:flex;align-items:center;gap:10px;height:auto;padding:11px 16px;border-bottom:1px solid var(--jsl-border);border-left:none;font-size:.7rem;letter-spacing:.6px;}
 .dropdown-menu a:last-child{border-bottom:none;}
-.dropdown-menu a:hover{color:#fff;background:rgba(0,180,160,.06);padding-left:22px;}
-.dropdown-menu a i{color:var(--jsl-teal);font-size:.8rem;width:16px;}
-.nav-cta{background:var(--jsl-teal)!important;color:#fff!important;font-weight:700!important;border-radius:3px;height:32px!important;padding:0 18px!important;margin-left:12px;border-bottom:none!important;align-self:center;font-size:.72rem!important;letter-spacing:.8px!important;}
-.nav-cta:hover{background:var(--jsl-gold)!important;}
+.dropdown-menu a:hover{color:#fff;background:rgba(0,180,160,.07);border-bottom-color:var(--jsl-border);padding-left:20px;}
+.dropdown-menu a i{color:var(--jsl-teal);font-size:.78rem;width:14px;flex-shrink:0;}
+/* CTA — same height/alignment, just different colours */
+.nav-cta{color:#fff!important;background:var(--jsl-teal);border-radius:3px;margin:10px 0 10px 10px;height:auto!important;padding:0 16px!important;align-self:center;border-bottom:none!important;}
+.nav-cta:hover{background:var(--jsl-gold)!important;color:#fff!important;border-bottom-color:transparent!important;}
 
 /* INTRO OVERLAY */
 #intro-overlay{position:fixed;inset:0;background:#020c16;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .9s ease,transform .9s ease;}
@@ -420,15 +433,16 @@ footer .footer-links a:hover{color:var(--jsl-teal);}
       <span class="b2">Managed IT Services</span>
     </div>
   </a>
+  <nav>
     <a href="#about">About</a>
     <div class="nav-dropdown">
-        <button class="nav-dropdown-btn">Services <i class="fas fa-chevron-down"></i></button>
-        <div class="dropdown-menu">
-            <a href="#services"><i class="fas fa-th-large"></i> Core Services</a>
-            <a href="#managed-it"><i class="fas fa-headset"></i> Managed IT</a>
-            <a href="#principles"><i class="fas fa-clipboard-check"></i> 12 Principles</a>
-            <a href="#colocation"><i class="fas fa-server"></i> Colocation</a>
-        </div>
+      <button class="nav-dropdown-btn">Services <i class="fas fa-chevron-down"></i></button>
+      <div class="dropdown-menu">
+        <a href="#services"><i class="fas fa-th-large"></i> Core Services</a>
+        <a href="#managed-it"><i class="fas fa-headset"></i> Managed IT</a>
+        <a href="#principles"><i class="fas fa-clipboard-check"></i> 12 Principles</a>
+        <a href="#colocation"><i class="fas fa-server"></i> Colocation</a>
+      </div>
     </div>
     <a href="#remote-support">Support</a>
     <a href="#contact" class="nav-cta">Contact Us</a>
